@@ -21,6 +21,11 @@ PORTS = {
         nextTurn=0xa71c8, nextTurnDist=0xa7112, rangeInit=0xa6bf8, dealloc=0xa6bd8,
         routeRet=0xb681c, routeHook=0xb6818, version=0xb1a2e, rds=0x144efa),
 }
+# Kia Stinger CKPE23.USA.0000.V014.011.251120: its library is byte-identical to the 250818 one
+# (md5 147dac01...), the expected-md5 argument still checks that
+PORTS['stinger-251120'] = PORTS['g70-250818']
+# Kia Stinger CKPE23.USA.0000.V015.012.260507: library byte-identical to the G70 260507 one (48ee793a)
+PORTS['stinger-260507'] = PORTS['g70-260507']
 # variants of a port (e.g. g70-260507-nocam) use that port's library
 A = PORTS[PORT.replace('-nocam', '')]
 g = bytearray(open(STOCK, 'rb').read())

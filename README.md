@@ -58,6 +58,28 @@ wireless Android Auto and CarPlay use; restart the head unit to get it back.
 
 Work on the open items continues; see [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
+## Kia Stinger: turn-by-turn on the HUD and cluster
+
+A separate package for the Kia Stinger (2022, firmware `CKPE23.USA`): the phone's turn-by-turn on
+the head-up display and cluster with **wired** CarPlay and Android Auto (or a wireless dongle),
+the same as the G70 bridge's turn-by-turn part. It does not add wireless CarPlay / Android Auto.
+Release asset: `Stinger-TurnByTurn-v1.0.zip`.
+
+| Firmware | Status |
+|---|---|
+| `CKPE23.USA.0000.V015.012.260507` | Reported working on a Stinger by its owner |
+| `CKPE23.USA.0000.V014.011.251120` | Built the same way from the same code; not yet run on a Stinger |
+
+Like the bridge, it is one package with a build per firmware and picks the one whose stock files
+the head unit has; on anything else it refuses and changes nothing. The Stinger's apps are the
+G70's code: on 251120 identical to the G70's 250818 build, on 260507 to the G70's 260507 build
+(one navigation class differs, which is not patched), so the patches are those in
+`src/patches/250818` and `src/patches/260507` (turn-by-turn classes only) plus update 24's DiPO
+hook (`src/hooks/hooks24_dipo.py`: switching nav apps on the iPhone clears the old app's turns).
+Install: unzip onto the root of a USB drive, plug it in with the head unit on and confirm; the head
+unit restarts. Uninstall: NEMESIS Manager → Packages → `g70.tbt`. Not together with the G70 bridge
+(`g70.carplay.bt`), which the package refuses to install alongside.
+
 ## Requirements
 
 - A head unit whose stock files match one of the package's firmware builds
@@ -146,6 +168,7 @@ smali diffs against each firmware's stock apps.
 ```
 package/          the NEMESIS package source (zip its contents to make g70.carplay.bt.zip);
                   package/firmware/<firmware>/ holds each firmware's checksums and deltas
+stinger/package/  the Kia Stinger turn-by-turn package source (g70.tbt, firmware/<firmware>/ sets)
 src/patches/      smali diffs per firmware: stock app -> this build (new classes included)
 src/java/         Java source of the bridge classes compiled into the apps
 src/hooks/        the scripts that insert the calls into the apps' smali

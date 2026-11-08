@@ -23,6 +23,7 @@
 #                           leaves it); checks the switch to persist.adb.tcp.port and back
 #   MOCK_WIFI_CLIENT=1      LEAFIA-WIFI-CLIENT on the install drive: part 1 also turns on
 #                           the Wi-Fi client (implies MOCK_USB_DESCRIPTOR=1)
+#   MOCK_PKG=g70.tbt        the turn-by-turn package instead of the bridge
 #   MOCK_NO_WIFI=1          a unit whose Wi-Fi chip never responds (no wlan0, driver
 #                           gives up): the install must be refused
 #
@@ -116,7 +117,8 @@ E
 chmod 755 "$X"/stub/*
 
 # unpack the package and point its scripts at the sandbox instead of the real paths
-(cd "$X" && unzip -q "$ZIP" packages/g70.carplay.bt.zip && unzip -q packages/g70.carplay.bt.zip -d pkg && unzip -q "$OLD" -d pkg-old)
+PKGID=${MOCK_PKG:-g70.carplay.bt}   # g70.tbt for the turn-by-turn package
+(cd "$X" && unzip -q "$ZIP" packages/$PKGID.zip && unzip -q packages/$PKGID.zip -d pkg && unzip -q "$OLD" -d pkg-old)
 find "$X/pkg" "$X/pkg-old" -name '*.sh' | while read -r f; do
     sed -i -e "1s|^#!.*|#!/bin/sh|" -e "s|/system/|$R/system/|g" -e "s|/data/|$R/data/|g" \
         -e "s|/storage/|$R/storage/|g" -e "s|/sys/class/|$R/sys/class/|g" -e "s|/mnt/media_rw/|$R/mnt/media_rw/|g" \
@@ -125,7 +127,7 @@ find "$X/pkg" "$X/pkg-old" -name '*.sh' | while read -r f; do
         -e "s|^\(export PATH=.*\)$|\1:/usr/bin:/bin|" "$f"
 done
 [ "$MOCK_WIFI_CLIENT" = 1 ] && MOCK_USB_DESCRIPTOR=1 && : > "$R/storage/usb0/LEAFIA-WIFI-CLIENT"
-[ "$MOCK_USB_DESCRIPTOR" = 1 ] && printf '[nemesis]\nversion=1.0\ntype=install\npath=packages/g70.carplay.bt.zip\n' > "$R/storage/usb0/NEMESIS.data"
+[ "$MOCK_USB_DESCRIPTOR" = 1 ] && printf '[nemesis]\nversion=1.0\ntype=install\npath=packages/%s.zip\n' "$PKGID" > "$R/storage/usb0/NEMESIS.data"
 
 (cd "$R" && find system -type f -exec md5sum {} \; | sort -k2) > "$X/before.md5"
 if [ "$MOCK_LEFTOVER_STOPPED" = 1 ]; then

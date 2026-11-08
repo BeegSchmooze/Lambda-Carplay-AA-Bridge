@@ -1,0 +1,13 @@
+[nemesis]
+version=1.0
+id=g70.tbt
+name=Stinger Turn-by-Turn (wired Android Auto / CarPlay; 251120, 260507)
+types=application
+preinstall=scripts/pre.sh
+postinstall=scripts/post.sh
+preuninstall=scripts/preun.sh
+
+[app.0]
+kind=sh
+path=bin/status.sh
+uid=root
