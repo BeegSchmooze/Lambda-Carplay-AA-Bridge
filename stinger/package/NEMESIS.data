@@ -1,7 +1,7 @@
 [nemesis]
 version=1.0
 id=g70.tbt
-name=Stinger Turn-by-Turn (wired Android Auto / CarPlay; 251120, 260507)
+name=Kia Stinger turn-by-turn v1.1 (251120 and 260507)
 types=application
 preinstall=scripts/pre.sh
 postinstall=scripts/post.sh

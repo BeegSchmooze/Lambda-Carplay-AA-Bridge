@@ -6,7 +6,7 @@
 # usage: mock_tbt_multi.sh  (run in the leafia container)
 W=/work
 SH=$(command -v mksh || echo /bin/sh)
-R=$W/release-stinger-tbt/dist
+R=${TBT_MULTI:-$W/release-stinger-tbt}/dist   # TBT_MULTI: the multi package's release dir
 (cd $R && printf '[nemesis]\nversion=1.0\ntype=install\npath=packages/g70.tbt.zip\n' > NEMESIS.data \
     && rm -f Stinger-tbt.zip && zip -qrX Stinger-tbt.zip NEMESIS.data packages)
 Z=$R/Stinger-tbt.zip
@@ -39,5 +39,7 @@ u() {  # $1 label, $2 old package zip, $3 stock dir, $4 firmware
     echo "== upgrade: $1"
     env MOCK_PKG=g70.tbt MOCK_SH=$SH sh $W/tools-g70/mock-upgrade.sh $2 $Z $4 ckpe23_us $3 2>&1 | grep -E "INSTALL|UNINSTALL|REFUSED|FAIL" | head -4
 }
-u "251120 test build" $W/release-stinger-251120-tbt/dist/packages/g70.tbt.zip $W/ports/stinger-251120 $F251
-u "260507 test build (on the car)" $W/release-stinger-260507-tbt/dist/packages/g70.tbt.zip $W/ports/stinger-260507 $F260
+u "251120 test build" $W/prev/stinger-251120-tbt-test1-g70.tbt.zip $W/ports/stinger-251120 $F251
+u "260507 test build (on the car)" $W/prev/stinger-260507-tbt-test1-g70.tbt.zip $W/ports/stinger-260507 $F260
+u "v1.0 on 251120" $W/prev/stinger-tbt-v10-g70.tbt.zip $W/ports/stinger-251120 $F251
+u "v1.0 on 260507" $W/prev/stinger-tbt-v10-g70.tbt.zip $W/ports/stinger-260507 $F260

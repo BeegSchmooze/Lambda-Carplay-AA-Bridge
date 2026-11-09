@@ -1,6 +1,6 @@
 #!/system/bin/sh
 # g70.tbt - turn-by-turn on the cluster and HUD for wired Android Auto and CarPlay (and USB
-# wireless adapters): Stinger Turn-by-Turn (wired Android Auto / CarPlay; 251120, 260507). One firmware set per supported build in firmware/<name>/
+# wireless adapters): Kia Stinger turn-by-turn v1.1 (251120 and 260507). One firmware set per supported build in firmware/<name>/
 # (sums.sh + deltas); the set whose stock files this unit has is used (pick_firmware at the end).
 # The turn-by-turn part of the G70 bridge (g70.carplay.bt) without its wireless parts.
 #

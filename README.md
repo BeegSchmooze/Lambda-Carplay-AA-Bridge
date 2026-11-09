@@ -10,9 +10,11 @@ v1.1 it is **standalone**: HMG Leafia Plus does not need to be installed.
 > Unofficial. Not affiliated with Hyundai, Kia, Genesis, Google, Apple, the
 > NEMESIS project or HMG Leafia Plus. You use it at your own risk.
 
-## Status (v1.3)
+## Status (v1.4)
 
-v1.3 brings **wireless CarPlay back by itself** after a drop (engine off and on, or
+v1.4 makes the **approach bar on the HUD** empty as you near the turn (it stood still
+before) and clears the old app's turns when you **switch nav apps on the iPhone**.
+v1.3 brought **wireless CarPlay back by itself** after a drop (engine off and on, or
 walking away and coming back), **CarPlay lane guidance** on the cluster and HUD, and the
 drawn CarPlay turns on the 260507 firmware. Since v1.2 it is **one package for several
 firmwares**. It carries a separate build for
@@ -49,6 +51,8 @@ turn-by-turn and the now-playing track to the cluster and HUD.
 | CarPlay now playing on the cluster and HUD | Works (new in v1.0): track title and changes |
 | CarPlay call state on the cluster | Requested from the iPhone; not yet tested on the car |
 | CarPlay lane guidance on the cluster and HUD | New in v1.3: the iPhone's lanes as the car's own lane strip (up to 8 lanes, the lanes to use highlighted); not yet confirmed on the car |
+| HUD approach bar (beside the turn distance) | New in v1.4: full until about 1000 ft / 300 m before the turn, then empties to the turn, for Android Auto and CarPlay (both used to send a fixed value). Not yet confirmed on the car |
+| Switching nav apps on the iPhone | New in v1.4: the old app's turns are cleared at once and the car's navigation gets the cluster back (it used to wait 90 s) |
 | Wireless CarPlay reconnects by itself | New in v1.3. Engine off and on: confirmed on the car. Walking away and coming back: the car looks for the iPhone again every 30 s for 10 minutes; not yet confirmed on the car |
 | Speed / red-light camera alerts on the HUD | Moved out of the bridge in v1.2; coming back as a separate add-on |
 | Standalone wireless setup (no HMG Leafia Plus) | New in v1.1; tested in the mock head unit on factory files and confirmed on a second G70 |
@@ -63,7 +67,7 @@ Work on the open items continues; see [docs/TECHNICAL.md](docs/TECHNICAL.md).
 A separate package for the Kia Stinger (2022, firmware `CKPE23.USA`): the phone's turn-by-turn on
 the head-up display and cluster with **wired** CarPlay and Android Auto (or a wireless dongle),
 the same as the G70 bridge's turn-by-turn part. It does not add wireless CarPlay / Android Auto.
-Release asset: `Stinger-TurnByTurn-v1.0.zip`.
+Release asset: `Stinger-TurnByTurn-v1.1.zip` (v1.1 adds the moving HUD approach bar; installs over v1.0).
 
 | Firmware | Status |
 |---|---|
@@ -75,7 +79,8 @@ the head unit has; on anything else it refuses and changes nothing. The Stinger'
 G70's code: on 251120 identical to the G70's 250818 build, on 260507 to the G70's 260507 build
 (one navigation class differs, which is not patched), so the patches are those in
 `src/patches/250818` and `src/patches/260507` (turn-by-turn classes only) plus update 24's DiPO
-hook (`src/hooks/hooks24_dipo.py`: switching nav apps on the iPhone clears the old app's turns).
+hook (`src/hooks/hooks24_dipo.py`: switching nav apps on the iPhone clears the old app's turns)
+and update 25's approach bar (`src/hooks/hooks25_bar.py`, `src/java/LeafiaBar.java.in`).
 Install: unzip onto the root of a USB drive, plug it in with the head unit on and confirm; the head
 unit restarts. Uninstall: NEMESIS Manager → Packages → `g70.tbt`. Not together with the G70 bridge
 (`g70.carplay.bt`), which the package refuses to install alongside.
@@ -116,14 +121,15 @@ files and must match the tested build's checksum.
 
 ## Install
 
-1. Download the release zip (`G70-Bridge-v1.3.zip`) and unzip it onto the root
+1. Download the release zip (`G70-Bridge-v1.4.zip`) and unzip it onto the root
    of the USB drive. You should have `NEMESIS.data` and
    `packages/g70.carplay.bt.zip` at the top level. Do not unzip
    `g70.carplay.bt.zip` itself.
 2. Plug the drive into the car with the head unit on.
 3. If an earlier build of this package is installed, NEMESIS first offers
-   **uninstall**: accept it. Then accept **install**. (v1.3 can also install
-   straight over v1.2, v1.1 and the earlier builds for the other two firmwares.)
+   **uninstall**: accept it. Then accept **install**. (v1.4 can also install
+   straight over v1.3, update 24, v1.2, v1.1 and the earlier builds for the
+   other two firmwares.)
 4. The head unit restarts. The first start after an install can take a few
    minutes, and Bluetooth may show "initializing" for a while; that is the apps
    being optimised once.

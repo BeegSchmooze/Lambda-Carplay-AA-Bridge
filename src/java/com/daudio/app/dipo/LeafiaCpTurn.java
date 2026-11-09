@@ -187,6 +187,10 @@ public final class LeafiaCpTurn {
         } catch (Throwable t) {
             Log.w(TAG, "Leafia: CarPlay turn mapping failed: " + t);
         }
+        // update 25: the HUD's approach bar (DiPO sends 0), filled as the car navigation does
+        int bar0 = bar;
+        bar = LeafiaBar.cp(dist, distErr, unit, bar0);
+        barErr = LeafiaBar.cpErr(dist, distErr, unit, barErr);
         nc.updateTBTInfo(type, side, dir, dist, distErr, combi, unit, bar, barErr);
         try {
             // the HUD's distance (as the Android Auto path sends it)

@@ -62,5 +62,11 @@ u 11 "v1.2 on 251120" $W/prev/v12-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.0
 u 12 "v1.2 on 250818" $W/prev/v12-g70.carplay.bt.zip 250818 IKFL.USA.0000.V014.010.250818 &
 u 13 "v1.2 on 260507" $W/prev/v12-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
 u 14 "260507 update 23 test build" $W/prev/u23test1-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
+u 15 "v1.3 on 251120" $W/prev/v13-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.011.251120 &
+u 16 "v1.3 on 250818" $W/prev/v13-g70.carplay.bt.zip 250818 IKFL.USA.0000.V014.010.250818 &
+u 17 "v1.3 on 260507" $W/prev/v13-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
+u 18 "update 24 on 251120" $W/prev/u24-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.011.251120 &
+u 19 "update 24 on 250818" $W/prev/u24-g70.carplay.bt.zip 250818 IKFL.USA.0000.V014.010.250818 &
+u 20 "update 24 on 260507" $W/prev/u24-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
 wait
 cat $O/[0-9]*.txt

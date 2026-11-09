@@ -1,6 +1,6 @@
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$1.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$1.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$1.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$1.smali	2026-11-04 21:56:23.752352445 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$1.smali	2026-11-09 20:53:40.030578969 +0000
 @@ -0,0 +1,117 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAa$1;
 +.super Ljava/lang/Object;
@@ -121,7 +121,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$2.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$2.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$2.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$2.smali	2026-11-04 21:56:23.761240329 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$2.smali	2026-11-09 20:53:40.039727732 +0000
 @@ -0,0 +1,111 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAa$2;
 +.super Ljava/lang/Object;
@@ -236,7 +236,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$3.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$3.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$3.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$3.smali	2026-11-04 21:56:23.766396823 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$3.smali	2026-11-09 20:53:40.044998774 +0000
 @@ -0,0 +1,93 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAa$3;
 +.super Ljava/lang/Object;
@@ -333,7 +333,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$4.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$4.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$4.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$4.smali	2026-11-04 21:56:23.767254070 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$4.smali	2026-11-09 20:53:40.053962910 +0000
 @@ -0,0 +1,80 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAa$4;
 +.super Ljava/lang/Object;
@@ -417,7 +417,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$5.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$5.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa$5.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$5.smali	2026-11-04 21:56:23.775921145 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa$5.smali	2026-11-09 20:53:40.059382577 +0000
 @@ -0,0 +1,80 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAa$5;
 +.super Ljava/lang/Object;
@@ -501,7 +501,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAa.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa.smali	2026-11-04 21:56:23.784145973 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAa.smali	2026-11-09 20:53:40.068222071 +0000
 @@ -0,0 +1,388 @@
 +.class public final Lcom/google/android/projection/leafia/LeafiaAa;
 +.super Ljava/lang/Object;
@@ -893,7 +893,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$1.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$1.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$1.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$1.smali	2026-11-04 21:56:23.791254906 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$1.smali	2026-11-09 20:53:40.073658544 +0000
 @@ -0,0 +1,50 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAaTurns$1;
 +.super Ljava/lang/Object;
@@ -947,7 +947,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$2.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$2.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$2.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$2.smali	2026-11-04 21:56:23.801032363 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$2.smali	2026-11-09 20:53:40.078848760 +0000
 @@ -0,0 +1,50 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAaTurns$2;
 +.super Ljava/lang/Object;
@@ -1001,7 +1001,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$3.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$3.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$3.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$3.smali	2026-11-04 21:56:23.807194639 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$3.smali	2026-11-09 20:53:40.083767041 +0000
 @@ -0,0 +1,57 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAaTurns$3;
 +.super Ljava/lang/Object;
@@ -1062,7 +1062,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$4.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$4.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns$4.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$4.smali	2026-11-04 21:56:23.812322702 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns$4.smali	2026-11-09 20:53:40.088662403 +0000
 @@ -0,0 +1,50 @@
 +.class Lcom/google/android/projection/leafia/LeafiaAaTurns$4;
 +.super Ljava/lang/Object;
@@ -1116,8 +1116,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaAaTurns.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns.smali	2026-11-04 21:56:23.819255881 +0000
-@@ -0,0 +1,4551 @@
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaAaTurns.smali	2026-11-09 20:53:40.098326696 +0000
+@@ -0,0 +1,4557 @@
 +.class final Lcom/google/android/projection/leafia/LeafiaAaTurns;
 +.super Ljava/lang/Object;
 +.source "LeafiaAaTurns.java"
@@ -4649,7 +4649,13 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +    invoke-static {}, Lcom/google/android/projection/sink/navigation/LeafiaTbtMark;->mark()V
 +
 +    .line 340
-+    const/16 v8, 0x20
++    iget v0, p0, Lcom/google/android/projection/leafia/LeafiaAaTurns;->distance:F
++
++    iget v1, p0, Lcom/google/android/projection/leafia/LeafiaAaTurns;->unit:I
++
++    invoke-static {v0, v1}, Lcom/google/android/projection/leafia/LeafiaBar;->level(FI)I
++
++    move-result v8
 +
 +    .line 341
 +    iget v0, p0, Lcom/google/android/projection/leafia/LeafiaAaTurns;->distance:F
@@ -5669,9 +5675,569 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +
 +    goto :goto_4
 +.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaBar.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaBar.smali
+--- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaBar.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaBar.smali	2026-11-09 20:53:40.125334931 +0000
+@@ -0,0 +1,556 @@
++.class public final Lcom/google/android/projection/leafia/LeafiaBar;
++.super Ljava/lang/Object;
++.source "LeafiaBar.java"
++
++
++# static fields
++.field public static final WINDOW_M:F = 300.0f
++
++
++# direct methods
++.method private constructor <init>()V
++    .registers 1
++
++    .line 16
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method public static cp(FIII)I
++    .registers 5
++
++    if-nez p1, :cond_11
++
++    .line 42
++    invoke-static {p0, p2}, Lcom/google/android/projection/leafia/LeafiaBar;->meters(FI)F
++
++    move-result p1
++
++    const/4 v0, 0x0
++
++    cmpg-float p1, p1, v0
++
++    if-gez p1, :cond_c
++
++    goto :goto_11
++
++    .line 43
++    :cond_c
++    invoke-static {p0, p2}, Lcom/google/android/projection/leafia/LeafiaBar;->level(FI)I
++
++    move-result p0
++
++    return p0
++
++    :cond_11
++    :goto_11
++    return p3
++.end method
++
++.method public static cpErr(FIII)I
++    .registers 4
++
++    if-nez p1, :cond_e
++
++    .line 48
++    invoke-static {p0, p2}, Lcom/google/android/projection/leafia/LeafiaBar;->meters(FI)F
++
++    move-result p0
++
++    const/4 p1, 0x0
++
++    cmpg-float p0, p0, p1
++
++    if-gez p0, :cond_c
++
++    goto :goto_e
++
++    :cond_c
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_e
++    :goto_e
++    return p3
++.end method
++
++.method public static level(FI)I
++    .registers 3
++
++    .line 34
++    invoke-static {p0, p1}, Lcom/google/android/projection/leafia/LeafiaBar;->meters(FI)F
++
++    move-result p0
++
++    const/4 p1, 0x0
++
++    cmpg-float p1, p0, p1
++
++    if-gez p1, :cond_c
++
++    const/16 p0, 0x64
++
++    return p0
++
++    :cond_c
++    const/high16 p1, 0x41200000    # 10.0f
++
++    mul-float p0, p0, p1
++
++    const/high16 p1, 0x43960000    # 300.0f
++
++    div-float/2addr p0, p1
++
++    float-to-double p0, p0
++
++    .line 36
++    invoke-static {p0, p1}, Ljava/lang/Math;->ceil(D)D
++
++    move-result-wide p0
++
++    double-to-int p0, p0
++
++    const/4 p1, 0x0
++
++    const/16 v0, 0xa
++
++    .line 37
++    invoke-static {v0, p0}, Ljava/lang/Math;->min(II)I
++
++    move-result p0
++
++    invoke-static {p1, p0}, Ljava/lang/Math;->max(II)I
++
++    move-result p0
++
++    mul-int/lit8 p0, p0, 0xa
++
++    return p0
++.end method
++
++.method public static main([Ljava/lang/String;)V
++    .registers 10
++
++    const/16 p0, 0xf
++
++    new-array v0, p0, [[F
++
++    const/4 v1, 0x2
++
++    new-array v2, v1, [F
++
++    .line 54
++    fill-array-data v2, :array_10a
++
++    const/4 v3, 0x0
++
++    aput-object v2, v0, v3
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_112
++
++    const/4 v4, 0x1
++
++    aput-object v2, v0, v4
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_11a
++
++    aput-object v2, v0, v1
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_122
++
++    const/4 v5, 0x3
++
++    aput-object v2, v0, v5
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_12a
++
++    const/4 v6, 0x4
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_132
++
++    const/4 v6, 0x5
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_13a
++
++    const/4 v6, 0x6
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_142
++
++    const/4 v6, 0x7
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_14a
++
++    const/16 v6, 0x8
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_152
++
++    const/16 v6, 0x9
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_15a
++
++    const/16 v6, 0xa
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_162
++
++    const/16 v6, 0xb
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_16a
++
++    const/16 v6, 0xc
++
++    aput-object v2, v0, v6
++
++    new-array v2, v1, [F
++
++    fill-array-data v2, :array_172
++
++    const/16 v6, 0xd
++
++    aput-object v2, v0, v6
++
++    new-array v1, v1, [F
++
++    fill-array-data v1, :array_17a
++
++    const/16 v2, 0xe
++
++    aput-object v1, v0, v2
++
++    const/4 v1, 0x0
++
++    :goto_84
++    if-ge v1, p0, :cond_ba
++
++    .line 56
++    aget-object v2, v0, v1
++
++    .line 57
++    sget-object v6, Ljava/lang/System;->out:Ljava/io/PrintStream;
++
++    new-instance v7, Ljava/lang/StringBuilder;
++
++    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
++
++    aget v8, v2, v3
++
++    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
++
++    const-string v8, " unit "
++
++    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    aget v8, v2, v4
++
++    float-to-int v8, v8
++
++    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v8, " -> "
++
++    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    aget v8, v2, v3
++
++    aget v2, v2, v4
++
++    float-to-int v2, v2
++
++    invoke-static {v8, v2}, Lcom/google/android/projection/leafia/LeafiaBar;->level(FI)I
++
++    move-result v2
++
++    invoke-virtual {v7, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-virtual {v6, v2}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++
++    add-int/lit8 v1, v1, 0x1
++
++    goto :goto_84
++
++    .line 59
++    :cond_ba
++    sget-object p0, Ljava/lang/System;->out:Ljava/io/PrintStream;
++
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "cp err -1 keeps bar: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const/high16 v1, 0x42c80000    # 100.0f
++
++    const/4 v2, -0x1
++
++    invoke-static {v1, v2, v5, v3}, Lcom/google/android/projection/leafia/LeafiaBar;->cp(FIII)I
++
++    move-result v4
++
++    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v4, "/"
++
++    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-static {v1, v2, v5, v3}, Lcom/google/android/projection/leafia/LeafiaBar;->cpErr(FIII)I
++
++    move-result v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++
++    .line 60
++    sget-object p0, Ljava/lang/System;->out:Ljava/io/PrintStream;
++
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "cp 350 ft: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const/high16 v1, 0x43af0000    # 350.0f
++
++    invoke-static {v1, v3, v5, v3}, Lcom/google/android/projection/leafia/LeafiaBar;->cp(FIII)I
++
++    move-result v2
++
++    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-static {v1, v3, v5, v3}, Lcom/google/android/projection/leafia/LeafiaBar;->cpErr(FIII)I
++
++    move-result v1
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v0
++
++    invoke-virtual {p0, v0}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++
++    return-void
++
++    :array_10a
++    .array-data 4
++        0x40000000    # 2.0f
++        0x40000000    # 2.0f
++    .end array-data
++
++    :array_112
++    .array-data 4
++        0x3e99999a    # 0.3f
++        0x40000000    # 2.0f
++    .end array-data
++
++    :array_11a
++    .array-data 4
++        0x3e4ccccd    # 0.2f
++        0x40000000    # 2.0f
++    .end array-data
++
++    :array_122
++    .array-data 4
++        0x447a0000    # 1000.0f
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_12a
++    .array-data 4
++        0x44760000    # 984.0f
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_132
++    .array-data 4
++        0x43fa0000    # 500.0f
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_13a
++    .array-data 4
++        0x43af0000    # 350.0f
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_142
++    .array-data 4
++        0x42c80000    # 100.0f
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_14a
++    .array-data 4
++        0x0
++        0x40400000    # 3.0f
++    .end array-data
++
++    :array_152
++    .array-data 4
++        0x43960000    # 300.0f
++        0x0
++    .end array-data
++
++    :array_15a
++    .array-data 4
++        0x43160000    # 150.0f
++        0x0
++    .end array-data
++
++    :array_162
++    .array-data 4
++        0x41e80000    # 29.0f
++        0x0
++    .end array-data
++
++    :array_16a
++    .array-data 4
++        0x3f99999a    # 1.2f
++        0x3f800000    # 1.0f
++    .end array-data
++
++    :array_172
++    .array-data 4
++        -0x40800000    # -1.0f
++        0x0
++    .end array-data
++
++    :array_17a
++    .array-data 4
++        0x40a00000    # 5.0f
++        0x41700000    # 15.0f
++    .end array-data
++.end method
++
++.method public static meters(FI)F
++    .registers 4
++
++    const/high16 v0, -0x40800000    # -1.0f
++
++    const/4 v1, 0x0
++
++    cmpg-float v1, p0, v1
++
++    if-ltz v1, :cond_35
++
++    .line 21
++    invoke-static {p0}, Ljava/lang/Float;->isNaN(F)Z
++
++    move-result v1
++
++    if-nez v1, :cond_35
++
++    invoke-static {p0}, Ljava/lang/Float;->isInfinite(F)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_14
++
++    goto :goto_35
++
++    :cond_14
++    if-eqz p1, :cond_34
++
++    const/4 v1, 0x1
++
++    if-eq p1, v1, :cond_31
++
++    const/4 v1, 0x2
++
++    if-eq p1, v1, :cond_2d
++
++    const/4 v1, 0x3
++
++    if-eq p1, v1, :cond_29
++
++    const/4 v1, 0x4
++
++    if-eq p1, v1, :cond_23
++
++    return v0
++
++    :cond_23
++    const p1, 0x3f6a161e    # 0.9144f
++
++    :goto_26
++    mul-float p0, p0, p1
++
++    return p0
++
++    :cond_29
++    const p1, 0x3e9c0ebf    # 0.3048f
++
++    goto :goto_26
++
++    :cond_2d
++    const p1, 0x44c92b02
++
++    goto :goto_26
++
++    :cond_31
++    const/high16 p1, 0x447a0000    # 1000.0f
++
++    goto :goto_26
++
++    :cond_34
++    return p0
++
++    :cond_35
++    :goto_35
++    return v0
++.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaCluster$Turn.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster$Turn.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaCluster$Turn.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster$Turn.smali	2026-11-04 21:56:23.829358767 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster$Turn.smali	2026-11-09 20:53:40.104402051 +0000
 @@ -0,0 +1,53 @@
 +.class final Lcom/google/android/projection/leafia/LeafiaCluster$Turn;
 +.super Ljava/lang/Object;
@@ -5728,7 +6294,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaCluster.smali HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster.smali
 --- HKMC_GPM.stock/com/google/android/projection/leafia/LeafiaCluster.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster.smali	2026-11-04 21:56:23.840099515 +0000
++++ HKMC_GPM.new/com/google/android/projection/leafia/LeafiaCluster.smali	2026-11-09 20:53:40.113929007 +0000
 @@ -0,0 +1,605 @@
 +.class final Lcom/google/android/projection/leafia/LeafiaCluster;
 +.super Ljava/lang/Object;
@@ -6336,8 +6902,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +    goto :goto_2b
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/protocol/NavigationStatus.smali HKMC_GPM.new/com/google/android/projection/protocol/NavigationStatus.smali
---- HKMC_GPM.stock/com/google/android/projection/protocol/NavigationStatus.smali	2026-11-04 21:56:15.506900304 +0000
-+++ HKMC_GPM.new/com/google/android/projection/protocol/NavigationStatus.smali	2026-11-04 21:56:22.058162681 +0000
+--- HKMC_GPM.stock/com/google/android/projection/protocol/NavigationStatus.smali	2026-11-09 20:53:32.064386959 +0000
++++ HKMC_GPM.new/com/google/android/projection/protocol/NavigationStatus.smali	2026-11-09 20:53:38.065968331 +0000
 @@ -79,33 +79,20 @@
  .end method
  
@@ -6395,8 +6961,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/protocol/WirelessExplorer.smali HKMC_GPM.new/com/google/android/projection/protocol/WirelessExplorer.smali
---- HKMC_GPM.stock/com/google/android/projection/protocol/WirelessExplorer.smali	2026-11-04 21:56:15.444393648 +0000
-+++ HKMC_GPM.new/com/google/android/projection/protocol/WirelessExplorer.smali	2026-11-04 21:56:22.219200131 +0000
+--- HKMC_GPM.stock/com/google/android/projection/protocol/WirelessExplorer.smali	2026-11-09 20:53:32.011184493 +0000
++++ HKMC_GPM.new/com/google/android/projection/protocol/WirelessExplorer.smali	2026-11-09 20:53:38.218644416 +0000
 @@ -4021,6 +4020,12 @@
  
      invoke-static {v0, v1}, Lcom/google/android/projection/sink/c/k;->d(Ljava/lang/String;Ljava/lang/String;)V
@@ -6416,8 +6982,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/GalConnectionManager.smali HKMC_GPM.new/com/google/android/projection/service/GalConnectionManager.smali
---- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionManager.smali	2026-11-04 21:56:15.523618317 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionManager.smali	2026-11-04 21:56:22.256427028 +0000
+--- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionManager.smali	2026-11-09 20:53:32.075254325 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionManager.smali	2026-11-09 20:53:38.241612961 +0000
 @@ -1273,8 +1273,27 @@
      :cond_13
      iget v0, p0, Lcom/google/android/projection/service/GalConnectionManager;->mStartMode:I
@@ -6489,8 +7055,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession$6.smali HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession$6.smali
---- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession$6.smali	2026-11-04 21:56:15.555705536 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession$6.smali	2026-11-04 21:56:22.316805716 +0000
+--- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession$6.smali	2026-11-09 20:53:32.091761714 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession$6.smali	2026-11-09 20:53:38.295663400 +0000
 @@ -151,6 +151,8 @@
  
      move-result-object v1
@@ -6506,8 +7072,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession.smali HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession.smali
---- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession.smali	2026-11-04 21:56:15.726580529 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession.smali	2026-11-04 21:56:22.345980543 +0000
+--- HKMC_GPM.stock/com/google/android/projection/service/GalConnectionSession.smali	2026-11-09 20:53:32.186992093 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/GalConnectionSession.smali	2026-11-09 20:53:38.329240307 +0000
 @@ -311,8 +311,6 @@
  
      const/16 v3, 0x3e7
@@ -6582,8 +7148,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/GalReceiverService.smali HKMC_GPM.new/com/google/android/projection/service/GalReceiverService.smali
---- HKMC_GPM.stock/com/google/android/projection/service/GalReceiverService.smali	2026-11-04 21:56:15.738578928 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/GalReceiverService.smali	2026-11-04 21:56:22.660183743 +0000
+--- HKMC_GPM.stock/com/google/android/projection/service/GalReceiverService.smali	2026-11-09 20:53:32.193540821 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/GalReceiverService.smali	2026-11-09 20:53:38.639843515 +0000
 @@ -17289,3 +17289,4 @@
      :cond_9
      return-void
@@ -6591,7 +7157,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/LeafiaAaRestart$1.smali HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart$1.smali
 --- HKMC_GPM.stock/com/google/android/projection/service/LeafiaAaRestart$1.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart$1.smali	2026-11-04 21:56:22.737712985 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart$1.smali	2026-11-09 20:53:38.706882700 +0000
 @@ -0,0 +1,99 @@
 +.class Lcom/google/android/projection/service/LeafiaAaRestart$1;
 +.super Ljava/lang/Object;
@@ -6694,7 +7260,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/LeafiaAaRestart.smali HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart.smali
 --- HKMC_GPM.stock/com/google/android/projection/service/LeafiaAaRestart.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart.smali	2026-11-04 21:56:22.747615969 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/LeafiaAaRestart.smali	2026-11-09 20:53:38.712732693 +0000
 @@ -0,0 +1,227 @@
 +.class public final Lcom/google/android/projection/service/LeafiaAaRestart;
 +.super Ljava/lang/Object;
@@ -6924,8 +7490,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +    goto :goto_43
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/service/StartReceiver.smali HKMC_GPM.new/com/google/android/projection/service/StartReceiver.smali
---- HKMC_GPM.stock/com/google/android/projection/service/StartReceiver.smali	2026-11-04 21:56:15.956905727 +0000
-+++ HKMC_GPM.new/com/google/android/projection/service/StartReceiver.smali	2026-11-04 21:56:22.731276014 +0000
+--- HKMC_GPM.stock/com/google/android/projection/service/StartReceiver.smali	2026-11-09 20:53:32.330953771 +0000
++++ HKMC_GPM.new/com/google/android/projection/service/StartReceiver.smali	2026-11-09 20:53:38.702069858 +0000
 @@ -29,6 +29,58 @@
      return-void
  .end method
@@ -7206,8 +7772,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/sink/b/i.smali HKMC_GPM.new/com/google/android/projection/sink/b/i.smali
---- HKMC_GPM.stock/com/google/android/projection/sink/b/i.smali	2026-11-04 21:56:16.781995842 +0000
-+++ HKMC_GPM.new/com/google/android/projection/sink/b/i.smali	2026-11-04 21:56:23.277225742 +0000
+--- HKMC_GPM.stock/com/google/android/projection/sink/b/i.smali	2026-11-09 20:53:32.881146661 +0000
++++ HKMC_GPM.new/com/google/android/projection/sink/b/i.smali	2026-11-09 20:53:39.412409562 +0000
 @@ -82,6 +82,9 @@
  .method public final onVehicleSpeedChanged(I)V
      .registers 5
@@ -7224,8 +7790,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali HKMC_GPM.new/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali
---- HKMC_GPM.stock/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali	2026-11-04 21:56:17.414287677 +0000
-+++ HKMC_GPM.new/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali	2026-11-04 21:56:23.613478213 +0000
+--- HKMC_GPM.stock/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali	2026-11-09 20:53:33.304235862 +0000
++++ HKMC_GPM.new/com/google/android/projection/sink/navigation/GpmNaviTBTManager.smali	2026-11-09 20:53:39.850975803 +0000
 @@ -198,6 +198,8 @@
  .method private clearMessage()V
      .registers 3
@@ -7527,7 +8093,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projec
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_GPM.stock/com/google/android/projection/sink/navigation/LeafiaTbtMark.smali HKMC_GPM.new/com/google/android/projection/sink/navigation/LeafiaTbtMark.smali
 --- HKMC_GPM.stock/com/google/android/projection/sink/navigation/LeafiaTbtMark.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_GPM.new/com/google/android/projection/sink/navigation/LeafiaTbtMark.smali	2026-11-04 21:56:23.619736711 +0000
++++ HKMC_GPM.new/com/google/android/projection/sink/navigation/LeafiaTbtMark.smali	2026-11-09 20:53:39.856611640 +0000
 @@ -0,0 +1,131 @@
 +.class public final Lcom/google/android/projection/sink/navigation/LeafiaTbtMark;
 +.super Ljava/lang/Object;

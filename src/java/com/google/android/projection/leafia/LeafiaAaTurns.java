@@ -337,7 +337,8 @@ final class LeafiaAaTurns {
     void sendTurn() {
         if (!navLive) return;
         LeafiaTbtMark.mark();   // G70: keep the car navigation's turn frames muted
-        int bar = 32, barErr = 0;
+        // update 25: the HUD's approach bar, filled as the car navigation does (aa-port/bar)
+        int bar = LeafiaBar.level(distance, unit), barErr = 0;
         if (distance < 0f) {
             bar = 254;
             barErr = -2;

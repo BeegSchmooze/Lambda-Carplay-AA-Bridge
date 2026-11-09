@@ -1,6 +1,6 @@
 diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali
---- Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-04 21:55:41.284488533 +0000
-+++ Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-04 21:55:42.579706457 +0000
+--- Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-09 20:53:01.947853271 +0000
++++ Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-09 20:53:03.041662217 +0000
 @@ -4628,7 +4628,8 @@
  
      const/16 v1, 0x3e7
@@ -12,8 +12,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/I
      .line 728
      sput v3, Lcom/tcc/iap2server/Iap2InitInformationMsg;->iAP2UsedRouteGuidance:I
 diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali
---- Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-04 21:55:41.505939716 +0000
-+++ Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-04 21:55:42.561018132 +0000
+--- Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-09 20:53:02.082648648 +0000
++++ Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-09 20:53:02.997871393 +0000
 @@ -33,11 +33,63 @@
  
  # virtual methods

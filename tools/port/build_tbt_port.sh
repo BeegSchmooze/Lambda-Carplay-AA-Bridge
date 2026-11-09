@@ -32,7 +32,7 @@ mk() {  # $1 app, $2 name, $3 merged tree, rest: files (relative to the tree roo
 }
 
 D=com/daudio/app/dipo
-mk HKMC_DiPO dipo dipo18 $D/i/e.smali $D/e/u.smali $D/LeafiaCpTurn.smali $D/LeafiaTbtMark.smali $D/LeafiaCpLane.smali
+mk HKMC_DiPO dipo dipo18 $D/i/e.smali $D/e/u.smali $D/LeafiaCpTurn.smali $D/LeafiaTbtMark.smali $D/LeafiaCpLane.smali $D/LeafiaBar.smali
 G=com/google/android/projection
 mk HKMC_GPM gpm gpm15 \
     $(cd build/$PORT-gpm15 && ls $G/leafia/*.smali | grep -v LeafiaCam) \

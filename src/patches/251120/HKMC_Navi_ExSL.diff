@@ -1,6 +1,6 @@
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/LeafiaNavLog.smali HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaNavLog.smali
 --- HKMC_Navi_ExSL.stock/com/mnsoft/navi/LeafiaNavLog.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaNavLog.smali	2026-11-04 21:55:41.020708080 +0000
++++ HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaNavLog.smali	2026-11-09 20:53:01.664767252 +0000
 @@ -0,0 +1,208 @@
 +.class public final Lcom/mnsoft/navi/LeafiaNavLog;
 +.super Ljava/lang/Object;
@@ -212,7 +212,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/Lea
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/LeafiaTbtMute.smali HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaTbtMute.smali
 --- HKMC_Navi_ExSL.stock/com/mnsoft/navi/LeafiaTbtMute.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaTbtMute.smali	2026-11-04 21:55:40.610751444 +0000
++++ HKMC_Navi_ExSL.new/com/mnsoft/navi/LeafiaTbtMute.smali	2026-11-09 20:53:01.142314328 +0000
 @@ -0,0 +1,172 @@
 +.class public final Lcom/mnsoft/navi/LeafiaTbtMute;
 +.super Ljava/lang/Object;
@@ -387,8 +387,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/Lea
 +    return-void
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/e/a.smali HKMC_Navi_ExSL.new/com/mnsoft/navi/e/a.smali
---- HKMC_Navi_ExSL.stock/com/mnsoft/navi/e/a.smali	2026-11-04 21:55:39.460191488 +0000
-+++ HKMC_Navi_ExSL.new/com/mnsoft/navi/e/a.smali	2026-11-04 21:55:40.516236074 +0000
+--- HKMC_Navi_ExSL.stock/com/mnsoft/navi/e/a.smali	2026-11-09 20:52:59.816790005 +0000
++++ HKMC_Navi_ExSL.new/com/mnsoft/navi/e/a.smali	2026-11-09 20:53:01.006390095 +0000
 @@ -5386,6 +5386,19 @@
  .method public static sendClusterData(I[I[D[Ljava/lang/String;[B)V
      .registers 18
@@ -410,8 +410,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/e/a
  
      invoke-static {p1}, Lcom/mnsoft/navi/e/a;->c([I)V
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_Navi_ExSL.stock/com/mnsoft/navi/message/a.smali HKMC_Navi_ExSL.new/com/mnsoft/navi/message/a.smali
---- HKMC_Navi_ExSL.stock/com/mnsoft/navi/message/a.smali	2026-11-04 21:55:38.716160300 +0000
-+++ HKMC_Navi_ExSL.new/com/mnsoft/navi/message/a.smali	2026-11-04 21:55:40.716820264 +0000
+--- HKMC_Navi_ExSL.stock/com/mnsoft/navi/message/a.smali	2026-11-09 20:52:59.330958659 +0000
++++ HKMC_Navi_ExSL.new/com/mnsoft/navi/message/a.smali	2026-11-09 20:53:01.285209758 +0000
 @@ -2598,6 +2598,16 @@
  .method public static d([BI)V
      .registers 4
