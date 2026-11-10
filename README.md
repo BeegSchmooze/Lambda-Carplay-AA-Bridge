@@ -1,7 +1,11 @@
 # G70 & Stinger CarPlay / AA Bridge
 
+Repository: Lambda-Carplay-AA-Bridge (formerly G70-Carplay-AA-Bridge; old links redirect here),
+named after the Lambda V6 shared by the cars it supports.
+
 Wireless Android Auto and wireless CarPlay, with turn-by-turn from both on the
-cluster/HUD, for the **Genesis G70** head unit, as a reversible
+cluster/HUD, for the **Genesis G70** head unit, and turn-by-turn on the HUD and
+cluster for the **Kia Stinger** (see [Kia Stinger](#kia-stinger-turn-by-turn-on-the-hud-and-cluster)), as a reversible
 [NEMESIS](https://github.com/xwtk/hmg_nemesis) package. It started from
 [HMG Leafia Plus](https://github.com/VysseCodes/HMG-Leafia-Plus), which had no
 patch set for this car's firmware, so every patch here was ported to it. Since
