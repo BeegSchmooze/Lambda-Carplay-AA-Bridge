@@ -138,6 +138,10 @@ files and must match the tested build's checksum.
    minutes, and Bluetooth may show "initializing" for a while; that is the apps
    being optimised once.
 
+The bare packages `g70.carplay.bt-1.4.zip` and `g70.tbt-1.1.zip` on the releases are
+the same packages for the NEMESIS Package Store and `nemesis install`. They use the
+store descriptor format (1.1), with compatibility set to the supported firmwares.
+
 ## Uninstall
 
 NEMESIS Manager → Packages → `g70.carplay.bt` → Uninstall, then restart the head
