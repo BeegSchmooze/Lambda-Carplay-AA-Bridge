@@ -1,4 +1,4 @@
-# G70 CarPlay / AA Bridge
+# G70 & Stinger CarPlay / AA Bridge
 
 Wireless Android Auto and wireless CarPlay, with turn-by-turn from both on the
 cluster/HUD, for the **Genesis G70** head unit, as a reversible
