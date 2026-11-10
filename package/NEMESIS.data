@@ -1,8 +1,14 @@
 [nemesis]
-version=1.0
+version=1.1
 id=g70.carplay.bt
-name=G70 Wireless CarPlay / Android Auto bridge (251120, 250818, 260507)
-types=application
+name=G70 Wireless CarPlay / Android Auto
+type=application
+package-version=1.4
+short-desc="Wireless CarPlay/AA, turn-by-turn on the HUD and cluster"
+detailed-desc="Wireless CarPlay and Android Auto for the Genesis G70, with the phone's turn-by-turn, lanes and approach bar on the HUD and cluster. Firmware 251120, 250818, 260507; it picks the build made for your files. Uninstall restores stock."
+os="IKFL.USA.*.251120,IKFL.USA.*.250818,IKFL.USA.*.260507"
+models="ikfl_*"
+depends="!g70.tbt,!wireless.projection,!wireless.carplay.aa,!projection.tbt,!enhanced.projection,!carplay.session"
 preinstall=scripts/pre.sh
 postinstall=scripts/post.sh
 preuninstall=scripts/preun.sh

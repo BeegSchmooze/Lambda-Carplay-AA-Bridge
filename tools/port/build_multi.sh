@@ -145,6 +145,8 @@ pick_firmware || true
 open(p, 'w').write(s)
 EOF
 sed -i 's/^name=.*/name=G70 Wireless CarPlay \/ Android Auto bridge (251120, 250818, 260507)/' $R/pkg/NEMESIS.data
+# store-format descriptor (1.1: version, description, os/models, conflicts); bump its version there
+python3 $W/ports/store_descriptor.py $R/pkg bridge > /dev/null
 for f in $R/pkg/scripts/*.sh $R/pkg/bin/*.sh; do mksh -n "$f"; done
 for d in $R/pkg/firmware/*; do echo "== ${d##*/}"; cat $d/sums.sh | cut -c1-90; ls $d; done
 mkdir -p $R/dist/packages
