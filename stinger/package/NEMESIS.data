@@ -1,6 +1,6 @@
 [nemesis]
 version=1.1
-id=g70.tbt
+id=stinger.tbt
 name=Kia Stinger turn-by-turn
 type=application
 package-version=1.1
@@ -8,7 +8,7 @@ short-desc="Phone turn-by-turn on the Stinger HUD and cluster"
 detailed-desc="CarPlay and Android Auto turn-by-turn, lanes and approach bar on the Kia Stinger's HUD and cluster, with wired projection or a wireless dongle. Firmware 251120, 260507. Does not add wireless. Uninstall restores stock."
 os="CKPE23.USA.*.251120,CKPE23.USA.*.260507"
 models="ckpe23_*"
-depends="!g70.carplay.bt,!projection.tbt,!enhanced.projection,!carplay.session"
+depends="!g70.carplay.bt,!g70.tbt,!projection.tbt,!enhanced.projection,!carplay.session"
 preinstall=scripts/pre.sh
 postinstall=scripts/post.sh
 preuninstall=scripts/preun.sh

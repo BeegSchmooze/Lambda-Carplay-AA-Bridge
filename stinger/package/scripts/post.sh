@@ -12,7 +12,7 @@ undo() {
     sync
     sys_ro
     apps_release
-    toast "G70 turn-by-turn install failed and was undone; the unit is back to stock. Check the NEMESIS logs."
+    toast "Stinger turn-by-turn install failed and was undone; the unit is back to stock. Check the NEMESIS logs."
     exit 1
 }
 
@@ -30,7 +30,7 @@ sys_ro
 apps_release
 log "all parts installed ($PKG) - rebooting"
 retire_usb_descriptor
-toast "G70 turn-by-turn installed. Restarting now: remove the USB drive while it restarts."
+toast "Stinger turn-by-turn installed. Restarting now: remove the USB drive while it restarts."
 exec /system/bin/reboot
 log "FAIL: reboot returned"
 exit 1

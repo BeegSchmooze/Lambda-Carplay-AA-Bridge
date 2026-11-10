@@ -1,4 +1,4 @@
-"""One turn-by-turn package (g70.tbt) for several firmwares, the way build_multi.sh makes the
+"""One turn-by-turn package (stinger.tbt, formerly g70.tbt) for several firmwares, the way build_multi.sh makes the
 bridge: the single-firmware tbt installer of the first set, with each set's checksums and deltas
 under firmware/<name>/ (sums.sh + *.lpd). The installer uses the set whose stock files the unit has
 (pick_firmware), whatever the firmware is called.
@@ -104,10 +104,13 @@ nd = os.path.join(pkg, 'NEMESIS.data')
 t = open(nd).read()
 t = re.sub(r'^name=.*$', 'name=' + title, t, flags=re.M)
 open(nd, 'w', newline='\n').write(t)
-# store-format descriptor (1.1: version, description, os/models, conflicts); see store_descriptor.py
-subprocess.check_call(['python3', os.path.join(os.path.dirname(os.path.abspath(__file__)), 'store_descriptor.py'), pkg, 'tbt'])
+# the Stinger package's own id (stinger.tbt), then the store-format descriptor (1.1: version,
+# description, os/models, conflicts); see stinger_id.py and store_descriptor.py
+_here = os.path.dirname(os.path.abspath(__file__))
+subprocess.check_call(['python3', os.path.join(_here, 'stinger_id.py'), pkg])
+subprocess.check_call(['python3', os.path.join(_here, 'store_descriptor.py'), pkg, 'tbt'])
 for f in os.listdir(os.path.join(pkg, 'scripts')) + ['../bin/status.sh']:
     subprocess.check_call(['mksh', '-n', os.path.join(pkg, 'scripts', f)])
 os.makedirs(os.path.join(out, 'dist', 'packages'))
-subprocess.check_call(['zip', '-qrX', '../dist/packages/g70.tbt.zip', '.'], cwd=pkg)
-print(subprocess.check_output(['md5sum', os.path.join(out, 'dist', 'packages', 'g70.tbt.zip')]).decode().strip())
+subprocess.check_call(['zip', '-qrX', '../dist/packages/stinger.tbt.zip', '.'], cwd=pkg)
+print(subprocess.check_output(['md5sum', os.path.join(out, 'dist', 'packages', 'stinger.tbt.zip')]).decode().strip())

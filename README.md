@@ -71,7 +71,9 @@ Work on the open items continues; see [docs/TECHNICAL.md](docs/TECHNICAL.md).
 A separate package for the Kia Stinger (2022, firmware `CKPE23.USA`): the phone's turn-by-turn on
 the head-up display and cluster with **wired** CarPlay and Android Auto (or a wireless dongle),
 the same as the G70 bridge's turn-by-turn part. It does not add wireless CarPlay / Android Auto.
-Release asset: `Stinger-TurnByTurn-v1.1.zip` (v1.1 adds the moving HUD approach bar; installs over v1.0).
+Release asset: `Stinger-TurnByTurn-v1.1.zip` (v1.1 adds the moving HUD approach bar). The package id is
+`stinger.tbt`; v1.0 and the test builds were `g70.tbt` (a leftover from the G70), so uninstall
+that first: v1.1 refuses while it is installed.
 
 | Firmware | Status |
 |---|---|
@@ -86,7 +88,7 @@ G70's code: on 251120 identical to the G70's 250818 build, on 260507 to the G70'
 hook (`src/hooks/hooks24_dipo.py`: switching nav apps on the iPhone clears the old app's turns)
 and update 25's approach bar (`src/hooks/hooks25_bar.py`, `src/java/LeafiaBar.java.in`).
 Install: unzip onto the root of a USB drive, plug it in with the head unit on and confirm; the head
-unit restarts. Uninstall: NEMESIS Manager → Packages → `g70.tbt`. Not together with the G70 bridge
+unit restarts. Uninstall: NEMESIS Manager → Packages → `stinger.tbt`. Not together with the G70 bridge
 (`g70.carplay.bt`), which the package refuses to install alongside.
 
 ## Requirements
@@ -138,7 +140,7 @@ files and must match the tested build's checksum.
    minutes, and Bluetooth may show "initializing" for a while; that is the apps
    being optimised once.
 
-The bare packages `g70.carplay.bt-1.4.zip` and `g70.tbt-1.1.zip` on the releases are
+The bare packages `g70.carplay.bt-1.4.zip` and `stinger.tbt-1.1.zip` on the releases are
 the same packages for the NEMESIS Package Store and `nemesis install`. They use the
 store descriptor format (1.1), with compatibility set to the supported firmwares.
 
@@ -182,7 +184,7 @@ smali diffs against each firmware's stock apps.
 ```
 package/          the NEMESIS package source (zip its contents to make g70.carplay.bt.zip);
                   package/firmware/<firmware>/ holds each firmware's checksums and deltas
-stinger/package/  the Kia Stinger turn-by-turn package source (g70.tbt, firmware/<firmware>/ sets)
+stinger/package/  the Kia Stinger turn-by-turn package source (stinger.tbt, formerly g70.tbt; firmware/<firmware>/ sets)
 src/patches/      smali diffs per firmware: stock app -> this build (new classes included)
 src/java/         Java source of the bridge classes compiled into the apps
 src/hooks/        the scripts that insert the calls into the apps' smali

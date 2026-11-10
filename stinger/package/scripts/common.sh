@@ -1,5 +1,5 @@
 #!/system/bin/sh
-# g70.tbt - turn-by-turn on the cluster and HUD for wired Android Auto and CarPlay (and USB
+# stinger.tbt - turn-by-turn on the cluster and HUD for wired Android Auto and CarPlay (and USB
 # wireless adapters): Kia Stinger turn-by-turn v1.1 (251120 and 260507). One firmware set per supported build in firmware/<name>/
 # (sums.sh + deltas); the set whose stock files this unit has is used (pick_firmware at the end).
 # The turn-by-turn part of the G70 bridge (g70.carplay.bt) without its wireless parts.
@@ -22,14 +22,16 @@
 export PATH=/data/nemesis/bin:/sbin:/vendor/bin:/system/sbin:/system/bin:/system/xbin
 export LD_LIBRARY_PATH=/vendor/lib:/system/lib
 
-PKG=g70.tbt
-BACKUP_DIR=/data/nemesis/backup/g70.tbt
-LOG=/data/nemesis/g70.tbt.log
+PKG=stinger.tbt
+BACKUP_DIR=/data/nemesis/backup/stinger.tbt
+LOG=/data/nemesis/stinger.tbt.log
 APP_DIR=/system/app
-BUILD_DIR=/data/nemesis/build/g70.tbt
+BUILD_DIR=/data/nemesis/build/stinger.tbt
 APPS="Iap2ServerApp HKMC_DiPO HKMC_GPM HKMC_Navi_ExSL"
 # the full bridge (the same apps, plus wireless) keeps its stock backup here while installed
 BRIDGE_BACKUP=/data/nemesis/backup/g70.carplay.bt
+# the same package under its earlier id (v1.0 and the test builds)
+OLD_TBT_BACKUP=/data/nemesis/backup/g70.tbt
 
 # stock files the builds were made from
 # our builds (stock APK + patched classes.dex)
@@ -40,7 +42,7 @@ AA_LIB=/system/lib/libautoreceiver_infobank.so
 # earlier builds of the library this package may replace (rebuilt from the stock backup)
 
 HOLD_PKGS="com.daudio.app.dipo com.tcc.iap2server com.google.android.projection.sink com.mnsoft.navi"
-HOLD_FILE=/data/nemesis/g70.tbt.stopped
+HOLD_FILE=/data/nemesis/stinger.tbt.stopped
 
 LP_ROOT=.
 . ./scripts/lpatch.sh
@@ -127,6 +129,10 @@ check_unit() {
     fi
     if [ -d "$BRIDGE_BACKUP" ]; then
         log "FAIL: the G70 bridge (g70.carplay.bt) is installed and already includes turn-by-turn - uninstall it first to use this package instead"
+        return 1
+    fi
+    if [ -d "$OLD_TBT_BACKUP" ]; then
+        log "FAIL: the earlier Stinger turn-by-turn (g70.tbt) is installed - uninstall it first (NEMESIS Manager, My Packages, g70.tbt), restart, then install this"
         return 1
     fi
     for _n in $APPS; do
@@ -284,7 +290,7 @@ build_apps() {
 
 remove_build_dir() {
     case "$BUILD_DIR" in
-        /data/nemesis/build/g70.tbt) rm -rf "$BUILD_DIR" ;;
+        /data/nemesis/build/stinger.tbt) rm -rf "$BUILD_DIR" ;;
     esac
     true
 }
@@ -401,7 +407,7 @@ retire_usb_descriptor() {
     for _d in /storage/usb0 /storage/usb1 /storage/usb2 /mnt/media_rw/usb0 /mnt/media_rw/usb1 /mnt/media_rw/usb2; do
         [ -f "$_d/NEMESIS.data" ] || continue
         grep -q '^type=install' "$_d/NEMESIS.data" 2>/dev/null || continue
-        grep -q 'g70\.tbt\.zip' "$_d/NEMESIS.data" 2>/dev/null || continue
+        grep -q 'stinger\.tbt\.zip' "$_d/NEMESIS.data" 2>/dev/null || continue
         if mv "$_d/NEMESIS.data" "$_d/NEMESIS.data.installed" 2>/dev/null; then
             log "renamed $_d/NEMESIS.data to NEMESIS.data.installed so the next boot does not reinstall"
             # test drive: make the diagnostic probe the drive's next NEMESIS item
@@ -419,7 +425,7 @@ retire_usb_descriptor() {
 
 remove_backup_dir() {
     case "$BACKUP_DIR" in
-        /data/nemesis/backup/g70.tbt) rm -rf "$BACKUP_DIR" ;;
+        /data/nemesis/backup/stinger.tbt) rm -rf "$BACKUP_DIR" ;;
         *) log "FAIL: refusing to remove $BACKUP_DIR"; return 1 ;;
     esac
 }

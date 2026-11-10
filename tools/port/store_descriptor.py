@@ -25,7 +25,7 @@ PKGS = {
         depends=['!g70.tbt'] + ['!' + o for o in OTHERS],
     ),
     'tbt': dict(
-        id='g70.tbt',
+        id='stinger.tbt',
         name='Kia Stinger turn-by-turn',
         version='1.1',
         short='Phone turn-by-turn on the Stinger HUD and cluster',
@@ -34,7 +34,7 @@ PKGS = {
                 'Does not add wireless. Uninstall restores stock.'),
         os=['CKPE23.USA.*.251120', 'CKPE23.USA.*.260507'],
         models=['ckpe23_*'],
-        depends=['!g70.carplay.bt'] + ['!' + o for o in OTHERS if o not in ('wireless.projection', 'wireless.carplay.aa')],
+        depends=['!g70.carplay.bt', '!g70.tbt'] + ['!' + o for o in OTHERS if o not in ('wireless.projection', 'wireless.carplay.aa')],
     ),
 }
 
@@ -46,7 +46,8 @@ def main():
     assert len(p['detail']) <= 256, len(p['detail'])
     nd = os.path.join(pkg, 'NEMESIS.data')
     old = open(nd).read()
-    assert ('id=' + p['id'] + '\n') in old, 'wrong package for ' + kind
+    ids = {'bridge': ['g70.carplay.bt'], 'tbt': ['g70.tbt', 'stinger.tbt']}[kind]
+    assert any(('id=' + i + '\n') in old for i in ids), 'wrong package for ' + kind
     t = '\n'.join([
         '[nemesis]',
         'version=1.1',
