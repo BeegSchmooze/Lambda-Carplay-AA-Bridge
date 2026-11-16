@@ -69,7 +69,14 @@ toast() {
 }
 
 # toolbox `mount -o remount` is refused on these units even as root; only NEMESIS can remount
-sys_rw() { /system/xbin/nemesis remount rw >/dev/null 2>&1; }
+# remount rw, then prove it with a real write (a remount can report ok and still leave it read-only)
+sys_rw() {
+    /system/xbin/nemesis remount rw >/dev/null 2>&1 || return 1
+    rm -f /system/.g70w 2>/dev/null
+    touch /system/.g70w 2>/dev/null || { log "FAIL: /system still read-only after remount"; return 1; }
+    rm -f /system/.g70w 2>/dev/null
+    return 0
+}
 sys_ro() { /system/xbin/nemesis remount ro >/dev/null 2>&1 || true; }
 
 file_md5() {
@@ -573,8 +580,7 @@ restore_proj() {
     done
     if [ -s "$PROJ_DIR/featurexml.path" ]; then
         read -r _fx < "$PROJ_DIR/featurexml.path"
-        put_file "$PROJ_DIR/featurexml.cfg" "$_fx" || { log "FAIL: restore $_fx"; _rc=1; }
-        log "restored $_fx"
+        if put_file "$PROJ_DIR/featurexml.cfg" "$_fx"; then log "restored $_fx"; else log "FAIL: restore $_fx"; _rc=1; fi
     fi
     if [ -s "$PROJ_DIR/build.prop" ]; then
         put_file "$PROJ_DIR/build.prop" "$BUILD_PROP" || { log "FAIL: restore $BUILD_PROP"; _rc=1; }
@@ -709,7 +715,7 @@ restore_aalib() {
 run_audio() {
     [ -f "comp/4_audio/scripts/$1.sh" ] || return 0
     log "== carplay.wifi.audio: $1"
-    ( cd comp/4_audio && LP_ROOT=../.. /system/bin/sh "scripts/$1.sh" )
+    ( cd comp/4_audio && G70_BUNDLE=1 LP_ROOT=../.. /system/bin/sh "scripts/$1.sh" )
 }
 
 # rename our install descriptor on the USB drive so the next boot does not reinstall

@@ -7,12 +7,12 @@ log "postinstall $PKG"
 undo() {
     log "FAIL: $1 - putting everything back"
     sys_rw
-    run_audio preun
     restore_apps force
     restore_core
     restore_aalib
     restore_props
     restore_proj
+    run_audio preun
     sync
     sys_ro
     apps_release

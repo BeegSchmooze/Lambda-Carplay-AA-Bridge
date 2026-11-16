@@ -13,8 +13,10 @@ if len(sys.argv) > 2:
     apps = [tuple(a.split(':')) for a in sys.argv[2:]]
 tmp = '/tmp/merge3'
 for app, t in apps:
-    base = W + '/ports/g70-251120/smali/' + app
-    ours = W + '/build/' + t
+    # MERGE_BASE=g70-260507 MERGE_OURS=g70-260507-nocam: rebase the newest trees (build/<ours>-<tree>)
+    # from that port's stock instead of the 251120 originals
+    base = W + '/ports/' + os.environ.get('MERGE_BASE', 'g70-251120') + '/smali/' + app
+    ours = W + '/build/' + (os.environ['MERGE_OURS'] + '-' + t if os.environ.get('MERGE_OURS') else t)
     theirs = W + '/ports/' + port + '/smali/' + app
     out = W + '/build/' + port + '-' + t
     shutil.rmtree(out, ignore_errors=True)

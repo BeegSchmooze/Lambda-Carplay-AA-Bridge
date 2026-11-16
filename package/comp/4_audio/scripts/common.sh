@@ -45,6 +45,8 @@ sys_rw() {
 
 sys_ro() {
     [ -n "$ROOT" ] && return 0
+    # inside the bundle the bundle remounts read-only once at the very end
+    [ -n "$G70_BUNDLE" ] && return 0
     /system/xbin/nemesis remount ro >/dev/null 2>&1 || true
 }
 

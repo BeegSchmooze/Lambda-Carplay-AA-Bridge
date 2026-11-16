@@ -10,7 +10,7 @@ printf '#!/bin/sh\nmd5sum "$1" | cut -d" " -f1\n' > $X/bin/md5
 printf '#!/bin/sh\necho "$MOCK_PRODUCT"\n' > $X/bin/getprop
 chmod 755 $X/bin/*
 for c in 251120:IKFL.USA.0000.V014.011.251120 250818:IKFL.USA.0000.V014.010.250818 \
-         260507:IKFL.USA.0000.V015.012.260507 other:IKFL.USA.0000.V015.012.260507; do
+         260507:IKFL.USA.0000.V015.012.260507 260903:IKFL.USA.0000.V016.010.260903 other:IKFL.USA.0000.V015.012.260507; do
     n=${c%%:*}; T=/tmp/mstock-$n
     D=$X/$n; mkdir -p $D/usb
     sed -e "s#/system/#$T/#g" -e "s#/data/nemesis/#$D/nemesis/#g" -e 's#^export PATH=.*#:#' \

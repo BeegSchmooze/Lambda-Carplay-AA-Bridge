@@ -21,6 +21,7 @@ stock() {
 stock 251120 $W/g70-stock $W/ports/g70-250818
 stock 250818 $W/ports/g70-250818 $W/ports/g70-250818
 stock 260507 $W/ports/g70-260507 $W/ports/g70-260507
+stock 260903 $W/ports/g70-260903 $W/ports/g70-260903
 stock other $W/ports/g70-260507 $W/ports/g70-260507
 cp $W/ports/g70-250818/app/HKMC_GPM.apk $W/ports/g70-250818/app/HKMC_GPM.odex /tmp/mstock-other/app/
 O=/tmp/mockpar; rm -rf $O; mkdir -p $O
@@ -68,5 +69,13 @@ u 17 "v1.3 on 260507" $W/prev/v13-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.0
 u 18 "update 24 on 251120" $W/prev/u24-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.011.251120 &
 u 19 "update 24 on 250818" $W/prev/u24-g70.carplay.bt.zip 250818 IKFL.USA.0000.V014.010.250818 &
 u 20 "update 24 on 260507" $W/prev/u24-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
+u 21 "v1.4 on 251120" $W/prev/v14-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.011.251120 &
+u 22 "v1.4 on 250818" $W/prev/v14-g70.carplay.bt.zip 250818 IKFL.USA.0000.V014.010.250818 &
+u 23 "v1.4 on 260507" $W/prev/v14-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
+u 24 "update 26 test on 260507" $W/prev/u26-g70.carplay.bt.zip 260507 IKFL.USA.0000.V015.012.260507 &
+u 25 "update 26 test on 251120" $W/prev/u26-g70.carplay.bt.zip 251120 IKFL.USA.0000.V014.011.251120 &
+t 26 "260903: fresh install" 260903 IKFL.USA.0000.V016.010.260903 260903 &
+t 27 "260903: Android down" 260903 IKFL.USA.0000.V016.010.260903 260903 MOCK_ANDROID_DOWN=1 &
+u 28 "260903 bridge (owner test build)" $W/prev/g70-260903-t2-g70.carplay.bt.zip 260903 IKFL.USA.0000.V016.010.260903 &
 wait
 cat $O/[0-9]*.txt

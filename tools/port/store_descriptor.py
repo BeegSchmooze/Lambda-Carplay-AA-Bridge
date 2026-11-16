@@ -15,19 +15,19 @@ PKGS = {
     'bridge': dict(
         id='g70.carplay.bt',
         name='G70 Wireless CarPlay / Android Auto',
-        version='1.4',
+        version='1.5',
         short='Wireless CarPlay/AA, turn-by-turn on the HUD and cluster',
         detail=('Wireless CarPlay and Android Auto for the Genesis G70, with the phone\'s turn-by-turn, '
-                'lanes and approach bar on the HUD and cluster. Firmware 251120, 250818, 260507; '
+                'lanes and approach bar on the HUD and cluster. Firmware 251120, 250818, 260507, 260903; '
                 'it picks the build made for your files. Uninstall restores stock.'),
-        os=['IKFL.USA.*.251120', 'IKFL.USA.*.250818', 'IKFL.USA.*.260507'],
+        os=['IKFL.USA.*.251120', 'IKFL.USA.*.250818', 'IKFL.USA.*.260507', 'IKFL.USA.*.260903'],
         models=['ikfl_*'],
         depends=['!g70.tbt'] + ['!' + o for o in OTHERS],
     ),
     'tbt': dict(
         id='stinger.tbt',
         name='Kia Stinger turn-by-turn',
-        version='1.1',
+        version='1.2',
         short='Phone turn-by-turn on the Stinger HUD and cluster',
         detail=('CarPlay and Android Auto turn-by-turn, lanes and approach bar on the Kia Stinger\'s HUD '
                 'and cluster, with wired projection or a wireless dongle. Firmware 251120, 260507. '

@@ -31,7 +31,7 @@ def uses(root):
 
 bad = 0
 for app, t in apps:
-    base = W + '/ports/g70-251120/smali/' + app
+    base = W + '/ports/' + os.environ.get('MERGE_BASE', 'g70-251120') + '/smali/' + app
     theirs = W + '/ports/' + port + '/smali/' + app
     tree = W + '/build/' + port + '-' + t
     ub, ut = uses(base), uses(theirs)

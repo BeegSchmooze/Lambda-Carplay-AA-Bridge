@@ -10,10 +10,32 @@ package @PKG@;
  * Same file for GPM and DiPO (package filled in by aa-port/bar/build_bar.sh).
  */
 public final class LeafiaBar {
-    /** metres before the turn where the bar starts to shrink (about 1000 ft) */
-    public static final float WINDOW_M = 300f;
+    /**
+     * metres before the turn where the bar starts to shrink. 500 m matches the car's own navigation
+     * (drive log 2026-10-31: 90 at 0.3 mi, 80 at 0.2 mi, 60 at 900 ft, 10 at 100 ft).
+     */
+    public static final float WINDOW_M = 500f;
+
+    /**
+     * Update 26: the HUD draws its approach bar from the trap frame's barGraphLevel (0-100), which
+     * only the car's navigation sends. The level is published here; HKMC_Navi_ExSL's LeafiaTrapBar
+     * puts it in that frame while the phone guides (sys.leafia.phonetbt fresh).
+     */
+    static final String BAR_PROP = "sys.leafia.phonebar";
+    static int sPublished = -1;
 
     private LeafiaBar() {
+    }
+
+    static void publish(int l) {
+        if (l == sPublished) return;
+        sPublished = l;
+        try {
+            Class.forName("android.os.SystemProperties").getMethod("set", String.class, String.class)
+                    .invoke(null, BAR_PROP, String.valueOf(l));
+        } catch (Throwable t) {
+            // off the car (or no permission): the TBT frame still carries the level
+        }
     }
 
     /** metres for a NavigationCluster distance and unit (0 m, 1 km, 2 mi, 3 ft, 4 yd), or -1 */
@@ -29,12 +51,23 @@ public final class LeafiaBar {
         }
     }
 
-    /** barGraphLevel 0..100 in steps of 10 for this distance; 100 when it can't be told */
+    /**
+     * barGraphLevel for this distance, the way the car's own navigation sends it (drive log
+     * 2026-10-31): 0 = no bar while the turn is farther than WINDOW_M (and when the distance can't
+     * be told); inside it the bar appears at 90 and counts down in tens (10 just before the turn).
+     * Update 27 (2026-11-15, owner: "the bar shouldn't appear until it starts counting"): before
+     * this, far turns sent 100 (a full bar from far away).
+     */
     public static int level(float d, int unit) {
-        float m = meters(d, unit);
-        if (m < 0f) return 100;
+        int l = levelOf(meters(d, unit));
+        publish(l);
+        return l;
+    }
+
+    static int levelOf(float m) {
+        if (m <= 0f || m > WINDOW_M) return 0;
         int l = (int) Math.ceil(m * 10f / WINDOW_M);
-        return Math.max(0, Math.min(10, l)) * 10;
+        return Math.max(1, Math.min(9, l)) * 10;
     }
 
     /** CarPlay (DiPO e/u's call): our level for a valid distance, else DiPO's own bar */
@@ -58,5 +91,19 @@ public final class LeafiaBar {
         }
         System.out.println("cp err -1 keeps bar: " + cp(100f, -1, 3, 0) + "/" + cpErr(100f, -1, 3, 0));
         System.out.println("cp 350 ft: " + cp(350f, 0, 3, 0) + "/" + cpErr(350f, 0, 3, 0));
+        // the car's own navigation (2026-10-31 log): 0 far away, 90 at 0.3 mi, 80 at 0.2 mi, 60 at 900 ft, 10 at 100 ft
+        int[][] want = { { 2000, 2, 0 }, { 400, 2, 0 }, { 32, 2, 0 }, { 28, 2, 90 }, { 22, 2, 80 }, { 900, 3, 60 },
+                { 100, 3, 10 }, { 1, 3, 10 }, { 0, 3, 0 }, { -1, 3, 0 }, { 5, 15, 0 } };
+        int f = 0;
+        for (int[] w : want) {
+            float d = w[1] == 2 ? w[0] / 100f : w[0];
+            int got = level(d, w[1]);
+            if (got != w[2]) {
+                System.out.println("FAIL " + d + " unit " + w[1] + ": " + got + ", want " + w[2]);
+                f++;
+            }
+        }
+        System.out.println(f == 0 ? "ALL PASS" : f + " FAILED");
+        if (f != 0) System.exit(1);
     }
 }

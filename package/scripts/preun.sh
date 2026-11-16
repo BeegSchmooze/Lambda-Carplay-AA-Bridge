@@ -10,12 +10,12 @@ if ! sys_rw; then
     exit 1
 fi
 _rc=0
-run_audio preun || _rc=1
 restore_apps || _rc=1
 restore_core || _rc=1
 restore_aalib || _rc=1
 restore_props || _rc=1
 restore_proj || _rc=1
+run_audio preun || _rc=1
 sync
 sys_ro
 apps_release

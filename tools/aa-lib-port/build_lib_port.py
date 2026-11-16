@@ -20,6 +20,11 @@ PORTS = {
     'g70-260507': dict(
         nextTurn=0xa71c8, nextTurnDist=0xa7112, rangeInit=0xa6bf8, dealloc=0xa6bd8,
         routeRet=0xb681c, routeHook=0xb6818, version=0xb1a2e, rds=0x144efa),
+    # G70 on IKFL.USA.0000.V016.010.260903 (lib 90e39902): mapaddr/blmap from 260507, every patched
+    # byte pattern checked; dealloc is back to the 250818 form (byte-identical but for the BL)
+    'g70-260903': dict(
+        nextTurn=0xa9944, nextTurnDist=0xa988e, rangeInit=0xa9208, dealloc=0xa9e0c,
+        routeRet=0xb8690, routeHook=0xb868c, version=0xb87da, rds=0x144f1a),
 }
 # Kia Stinger CKPE23.USA.0000.V014.011.251120: its library is byte-identical to the 250818 one
 # (md5 147dac01...), the expected-md5 argument still checks that

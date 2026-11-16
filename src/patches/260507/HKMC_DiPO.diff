@@ -1,21 +1,31 @@
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaBar.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaBar.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaBar.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaBar.smali	2026-11-09 20:53:28.568874544 +0000
-@@ -0,0 +1,556 @@
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaBar.smali	2026-11-16 19:00:31.097796686 +0000
+@@ -0,0 +1,935 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaBar;
 +.super Ljava/lang/Object;
 +.source "LeafiaBar.java"
 +
 +
 +# static fields
-+.field public static final WINDOW_M:F = 300.0f
++.field static final BAR_PROP:Ljava/lang/String; = "sys.leafia.phonebar"
++
++.field public static final WINDOW_M:F = 500.0f
++
++.field static sPublished:I = -0x1
 +
 +
 +# direct methods
++.method static constructor <clinit>()V
++    .registers 0
++
++    return-void
++.end method
++
 +.method private constructor <init>()V
 +    .registers 1
 +
-+    .line 16
++    .line 27
 +    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
 +
 +    return-void
@@ -26,7 +36,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +
 +    if-nez p1, :cond_11
 +
-+    .line 42
++    .line 75
 +    invoke-static {p0, p2}, Lcom/daudio/app/dipo/LeafiaBar;->meters(FI)F
 +
 +    move-result p1
@@ -39,7 +49,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +
 +    goto :goto_11
 +
-+    .line 43
++    .line 76
 +    :cond_c
 +    invoke-static {p0, p2}, Lcom/daudio/app/dipo/LeafiaBar;->level(FI)I
 +
@@ -57,7 +67,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +
 +    if-nez p1, :cond_e
 +
-+    .line 48
++    .line 81
 +    invoke-static {p0, p2}, Lcom/daudio/app/dipo/LeafiaBar;->meters(FI)F
 +
 +    move-result p0
@@ -81,403 +91,705 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 +
 +.method public static level(FI)I
-+    .registers 3
++    .registers 2
 +
-+    .line 34
++    .line 62
 +    invoke-static {p0, p1}, Lcom/daudio/app/dipo/LeafiaBar;->meters(FI)F
 +
 +    move-result p0
 +
-+    const/4 p1, 0x0
-+
-+    cmpg-float p1, p0, p1
-+
-+    if-gez p1, :cond_c
-+
-+    const/16 p0, 0x64
-+
-+    return p0
-+
-+    :cond_c
-+    const/high16 p1, 0x41200000    # 10.0f
-+
-+    mul-float p0, p0, p1
-+
-+    const/high16 p1, 0x43960000    # 300.0f
-+
-+    div-float/2addr p0, p1
-+
-+    float-to-double p0, p0
-+
-+    .line 36
-+    invoke-static {p0, p1}, Ljava/lang/Math;->ceil(D)D
-+
-+    move-result-wide p0
-+
-+    double-to-int p0, p0
-+
-+    const/4 p1, 0x0
-+
-+    const/16 v0, 0xa
-+
-+    .line 37
-+    invoke-static {v0, p0}, Ljava/lang/Math;->min(II)I
++    invoke-static {p0}, Lcom/daudio/app/dipo/LeafiaBar;->levelOf(F)I
 +
 +    move-result p0
 +
-+    invoke-static {p1, p0}, Ljava/lang/Math;->max(II)I
++    .line 63
++    invoke-static {p0}, Lcom/daudio/app/dipo/LeafiaBar;->publish(I)V
++
++    return p0
++.end method
++
++.method static levelOf(F)I
++    .registers 3
++
++    const/4 v0, 0x0
++
++    cmpg-float v0, p0, v0
++
++    if-lez v0, :cond_25
++
++    const/high16 v0, 0x43fa0000    # 500.0f
++
++    cmpl-float v1, p0, v0
++
++    if-lez v1, :cond_c
++
++    goto :goto_25
++
++    :cond_c
++    const/high16 v1, 0x41200000    # 10.0f
++
++    mul-float p0, p0, v1
++
++    div-float/2addr p0, v0
++
++    float-to-double v0, p0
++
++    .line 69
++    invoke-static {v0, v1}, Ljava/lang/Math;->ceil(D)D
++
++    move-result-wide v0
++
++    double-to-int p0, v0
++
++    const/4 v0, 0x1
++
++    const/16 v1, 0x9
++
++    .line 70
++    invoke-static {v1, p0}, Ljava/lang/Math;->min(II)I
++
++    move-result p0
++
++    invoke-static {v0, p0}, Ljava/lang/Math;->max(II)I
 +
 +    move-result p0
 +
 +    mul-int/lit8 p0, p0, 0xa
 +
 +    return p0
++
++    :cond_25
++    :goto_25
++    const/4 p0, 0x0
++
++    return p0
 +.end method
 +
 +.method public static main([Ljava/lang/String;)V
-+    .registers 10
++    .registers 18
 +
-+    const/16 p0, 0xf
++    const/16 v0, 0xf
 +
-+    new-array v0, p0, [[F
++    new-array v1, v0, [[F
 +
-+    const/4 v1, 0x2
++    const/4 v2, 0x2
 +
-+    new-array v2, v1, [F
++    new-array v3, v2, [F
 +
-+    .line 54
-+    fill-array-data v2, :array_10a
++    .line 87
++    fill-array-data v3, :array_1d8
++
++    const/4 v4, 0x0
++
++    aput-object v3, v1, v4
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_1e0
++
++    const/4 v5, 0x1
++
++    aput-object v3, v1, v5
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_1e8
++
++    aput-object v3, v1, v2
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_1f0
++
++    const/4 v6, 0x3
++
++    aput-object v3, v1, v6
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_1f8
++
++    const/4 v7, 0x4
++
++    aput-object v3, v1, v7
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_200
++
++    const/4 v8, 0x5
++
++    aput-object v3, v1, v8
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_208
++
++    const/4 v9, 0x6
++
++    aput-object v3, v1, v9
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_210
++
++    const/4 v10, 0x7
++
++    aput-object v3, v1, v10
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_218
++
++    const/16 v11, 0x8
++
++    aput-object v3, v1, v11
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_220
++
++    const/16 v12, 0x9
++
++    aput-object v3, v1, v12
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_228
++
++    const/16 v13, 0xa
++
++    aput-object v3, v1, v13
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_230
++
++    const/16 v14, 0xb
++
++    aput-object v3, v1, v14
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_238
++
++    const/16 v15, 0xc
++
++    aput-object v3, v1, v15
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_240
++
++    const/16 v15, 0xd
++
++    aput-object v3, v1, v15
++
++    new-array v3, v2, [F
++
++    fill-array-data v3, :array_248
++
++    const/16 v15, 0xe
++
++    aput-object v3, v1, v15
 +
 +    const/4 v3, 0x0
 +
-+    aput-object v2, v0, v3
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_112
-+
-+    const/4 v4, 0x1
-+
-+    aput-object v2, v0, v4
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_11a
-+
-+    aput-object v2, v0, v1
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_122
-+
-+    const/4 v5, 0x3
-+
-+    aput-object v2, v0, v5
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_12a
-+
-+    const/4 v6, 0x4
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_132
-+
-+    const/4 v6, 0x5
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_13a
-+
-+    const/4 v6, 0x6
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_142
-+
-+    const/4 v6, 0x7
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_14a
-+
-+    const/16 v6, 0x8
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_152
-+
-+    const/16 v6, 0x9
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_15a
-+
-+    const/16 v6, 0xa
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_162
-+
-+    const/16 v6, 0xb
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_16a
-+
-+    const/16 v6, 0xc
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v2, v1, [F
-+
-+    fill-array-data v2, :array_172
-+
-+    const/16 v6, 0xd
-+
-+    aput-object v2, v0, v6
-+
-+    new-array v1, v1, [F
-+
-+    fill-array-data v1, :array_17a
-+
-+    const/16 v2, 0xe
-+
-+    aput-object v1, v0, v2
-+
-+    const/4 v1, 0x0
-+
 +    :goto_84
-+    if-ge v1, p0, :cond_ba
++    const-string v15, " unit "
 +
-+    .line 56
-+    aget-object v2, v0, v1
++    if-ge v3, v0, :cond_c0
 +
-+    .line 57
-+    sget-object v6, Ljava/lang/System;->out:Ljava/io/PrintStream;
++    .line 89
++    aget-object v16, v1, v3
 +
-+    new-instance v7, Ljava/lang/StringBuilder;
++    .line 90
++    sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
 +
-+    invoke-direct {v7}, Ljava/lang/StringBuilder;-><init>()V
++    new-instance v13, Ljava/lang/StringBuilder;
 +
-+    aget v8, v2, v3
++    invoke-direct {v13}, Ljava/lang/StringBuilder;-><init>()V
 +
-+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
++    aget v12, v16, v4
 +
-+    const-string v8, " unit "
++    invoke-virtual {v13, v12}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
 +
-+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v13, v15}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    aget v8, v2, v4
++    aget v12, v16, v5
 +
-+    float-to-int v8, v8
++    float-to-int v12, v12
 +
-+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v13, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    const-string v8, " -> "
++    const-string v12, " -> "
 +
-+    invoke-virtual {v7, v8}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v13, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    aget v8, v2, v3
++    aget v12, v16, v4
 +
-+    aget v2, v2, v4
++    aget v15, v16, v5
 +
-+    float-to-int v2, v2
++    float-to-int v15, v15
 +
-+    invoke-static {v8, v2}, Lcom/daudio/app/dipo/LeafiaBar;->level(FI)I
++    invoke-static {v12, v15}, Lcom/daudio/app/dipo/LeafiaBar;->level(FI)I
 +
-+    move-result v2
++    move-result v12
 +
-+    invoke-virtual {v7, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v13, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    invoke-virtual {v7}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++    invoke-virtual {v13}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 +
-+    move-result-object v2
++    move-result-object v12
 +
-+    invoke-virtual {v6, v2}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++    invoke-virtual {v0, v12}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 +
-+    add-int/lit8 v1, v1, 0x1
++    add-int/lit8 v3, v3, 0x1
++
++    const/16 v0, 0xf
++
++    const/16 v12, 0x9
++
++    const/16 v13, 0xa
 +
 +    goto :goto_84
 +
-+    .line 59
-+    :cond_ba
-+    sget-object p0, Ljava/lang/System;->out:Ljava/io/PrintStream;
++    .line 92
++    :cond_c0
++    sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
 +
-+    new-instance v0, Ljava/lang/StringBuilder;
++    new-instance v1, Ljava/lang/StringBuilder;
 +
-+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 +
-+    const-string v1, "cp err -1 keeps bar: "
++    const-string v3, "cp err -1 keeps bar: "
 +
-+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    const/high16 v1, 0x42c80000    # 100.0f
++    const/high16 v3, 0x42c80000    # 100.0f
 +
-+    const/4 v2, -0x1
++    const/4 v12, -0x1
 +
-+    invoke-static {v1, v2, v5, v3}, Lcom/daudio/app/dipo/LeafiaBar;->cp(FIII)I
++    invoke-static {v3, v12, v6, v4}, Lcom/daudio/app/dipo/LeafiaBar;->cp(FIII)I
 +
-+    move-result v4
++    move-result v13
 +
-+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    const-string v4, "/"
++    const-string v13, "/"
 +
-+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    invoke-static {v1, v2, v5, v3}, Lcom/daudio/app/dipo/LeafiaBar;->cpErr(FIII)I
++    invoke-static {v3, v12, v6, v4}, Lcom/daudio/app/dipo/LeafiaBar;->cpErr(FIII)I
 +
-+    move-result v1
++    move-result v12
 +
-+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v12}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 +
-+    move-result-object v0
++    move-result-object v1
 +
-+    invoke-virtual {p0, v0}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++    invoke-virtual {v0, v1}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 +
-+    .line 60
-+    sget-object p0, Ljava/lang/System;->out:Ljava/io/PrintStream;
++    .line 93
++    sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
 +
-+    new-instance v0, Ljava/lang/StringBuilder;
++    new-instance v1, Ljava/lang/StringBuilder;
 +
-+    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
 +
-+    const-string v1, "cp 350 ft: "
++    const-string v12, "cp 350 ft: "
 +
-+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    const/high16 v1, 0x43af0000    # 350.0f
++    const/high16 v12, 0x43af0000    # 350.0f
 +
-+    invoke-static {v1, v3, v5, v3}, Lcom/daudio/app/dipo/LeafiaBar;->cp(FIII)I
++    invoke-static {v12, v4, v6, v4}, Lcom/daudio/app/dipo/LeafiaBar;->cp(FIII)I
 +
-+    move-result v2
++    move-result v3
 +
-+    invoke-virtual {v0, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    invoke-virtual {v0, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v13}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
 +
-+    invoke-static {v1, v3, v5, v3}, Lcom/daudio/app/dipo/LeafiaBar;->cpErr(FIII)I
++    invoke-static {v12, v4, v6, v4}, Lcom/daudio/app/dipo/LeafiaBar;->cpErr(FIII)I
 +
-+    move-result v1
++    move-result v3
 +
-+    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
 +
-+    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
 +
-+    move-result-object v0
++    move-result-object v1
 +
-+    invoke-virtual {p0, v0}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++    invoke-virtual {v0, v1}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
 +
++    new-array v0, v14, [[I
++
++    new-array v1, v6, [I
++
++    .line 95
++    fill-array-data v1, :array_250
++
++    aput-object v1, v0, v4
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_25a
++
++    aput-object v1, v0, v5
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_264
++
++    aput-object v1, v0, v2
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_26e
++
++    aput-object v1, v0, v6
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_278
++
++    aput-object v1, v0, v7
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_282
++
++    aput-object v1, v0, v8
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_28c
++
++    aput-object v1, v0, v9
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_296
++
++    aput-object v1, v0, v10
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_2a0
++
++    aput-object v1, v0, v11
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_2aa
++
++    const/16 v3, 0x9
++
++    aput-object v1, v0, v3
++
++    new-array v1, v6, [I
++
++    fill-array-data v1, :array_2b4
++
++    const/16 v3, 0xa
++
++    aput-object v1, v0, v3
++
++    const/4 v1, 0x0
++
++    const/4 v3, 0x0
++
++    :goto_164
++    if-ge v1, v14, :cond_1b7
++
++    .line 98
++    aget-object v6, v0, v1
++
++    .line 99
++    aget v7, v6, v5
++
++    if-ne v7, v2, :cond_173
++
++    aget v7, v6, v4
++
++    int-to-float v7, v7
++
++    const/high16 v8, 0x42c80000    # 100.0f
++
++    div-float/2addr v7, v8
++
++    goto :goto_178
++
++    :cond_173
++    const/high16 v8, 0x42c80000    # 100.0f
++
++    aget v7, v6, v4
++
++    int-to-float v7, v7
++
++    .line 100
++    :goto_178
++    aget v9, v6, v5
++
++    invoke-static {v7, v9}, Lcom/daudio/app/dipo/LeafiaBar;->level(FI)I
++
++    move-result v9
++
++    .line 101
++    aget v10, v6, v2
++
++    if-eq v9, v10, :cond_1b4
++
++    .line 102
++    sget-object v10, Ljava/lang/System;->out:Ljava/io/PrintStream;
++
++    new-instance v11, Ljava/lang/StringBuilder;
++
++    invoke-direct {v11}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v12, "FAIL "
++
++    invoke-virtual {v11, v12}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(F)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v11, v15}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    aget v7, v6, v5
++
++    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v7, ": "
++
++    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v11, v9}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v7, ", want "
++
++    invoke-virtual {v11, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    aget v6, v6, v2
++
++    invoke-virtual {v11, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v11}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v6
++
++    invoke-virtual {v10, v6}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++
++    add-int/lit8 v3, v3, 0x1
++
++    :cond_1b4
++    add-int/lit8 v1, v1, 0x1
++
++    goto :goto_164
++
++    .line 106
++    :cond_1b7
++    sget-object v0, Ljava/lang/System;->out:Ljava/io/PrintStream;
++
++    if-nez v3, :cond_1be
++
++    const-string v1, "ALL PASS"
++
++    goto :goto_1cf
++
++    :cond_1be
++    new-instance v1, Ljava/lang/StringBuilder;
++
++    invoke-direct {v1}, Ljava/lang/StringBuilder;-><init>()V
++
++    invoke-virtual {v1, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v2, " FAILED"
++
++    invoke-virtual {v1, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    :goto_1cf
++    invoke-virtual {v0, v1}, Ljava/io/PrintStream;->println(Ljava/lang/String;)V
++
++    if-eqz v3, :cond_1d7
++
++    .line 107
++    invoke-static {v5}, Ljava/lang/System;->exit(I)V
++
++    :cond_1d7
 +    return-void
 +
-+    :array_10a
++    :array_1d8
 +    .array-data 4
 +        0x40000000    # 2.0f
 +        0x40000000    # 2.0f
 +    .end array-data
 +
-+    :array_112
++    :array_1e0
 +    .array-data 4
 +        0x3e99999a    # 0.3f
 +        0x40000000    # 2.0f
 +    .end array-data
 +
-+    :array_11a
++    :array_1e8
 +    .array-data 4
 +        0x3e4ccccd    # 0.2f
 +        0x40000000    # 2.0f
 +    .end array-data
 +
-+    :array_122
++    :array_1f0
 +    .array-data 4
 +        0x447a0000    # 1000.0f
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_12a
++    :array_1f8
 +    .array-data 4
 +        0x44760000    # 984.0f
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_132
++    :array_200
 +    .array-data 4
 +        0x43fa0000    # 500.0f
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_13a
++    :array_208
 +    .array-data 4
 +        0x43af0000    # 350.0f
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_142
++    :array_210
 +    .array-data 4
 +        0x42c80000    # 100.0f
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_14a
++    :array_218
 +    .array-data 4
 +        0x0
 +        0x40400000    # 3.0f
 +    .end array-data
 +
-+    :array_152
++    :array_220
 +    .array-data 4
 +        0x43960000    # 300.0f
 +        0x0
 +    .end array-data
 +
-+    :array_15a
++    :array_228
 +    .array-data 4
 +        0x43160000    # 150.0f
 +        0x0
 +    .end array-data
 +
-+    :array_162
++    :array_230
 +    .array-data 4
 +        0x41e80000    # 29.0f
 +        0x0
 +    .end array-data
 +
-+    :array_16a
++    :array_238
 +    .array-data 4
 +        0x3f99999a    # 1.2f
 +        0x3f800000    # 1.0f
 +    .end array-data
 +
-+    :array_172
++    :array_240
 +    .array-data 4
 +        -0x40800000    # -1.0f
 +        0x0
 +    .end array-data
 +
-+    :array_17a
++    :array_248
 +    .array-data 4
 +        0x40a00000    # 5.0f
 +        0x41700000    # 15.0f
++    .end array-data
++
++    :array_250
++    .array-data 4
++        0x7d0
++        0x2
++        0x0
++    .end array-data
++
++    :array_25a
++    .array-data 4
++        0x190
++        0x2
++        0x0
++    .end array-data
++
++    :array_264
++    .array-data 4
++        0x20
++        0x2
++        0x0
++    .end array-data
++
++    :array_26e
++    .array-data 4
++        0x1c
++        0x2
++        0x5a
++    .end array-data
++
++    :array_278
++    .array-data 4
++        0x16
++        0x2
++        0x50
++    .end array-data
++
++    :array_282
++    .array-data 4
++        0x384
++        0x3
++        0x3c
++    .end array-data
++
++    :array_28c
++    .array-data 4
++        0x64
++        0x3
++        0xa
++    .end array-data
++
++    :array_296
++    .array-data 4
++        0x1
++        0x3
++        0xa
++    .end array-data
++
++    :array_2a0
++    .array-data 4
++        0x0
++        0x3
++        0x0
++    .end array-data
++
++    :array_2aa
++    .array-data 4
++        -0x1
++        0x3
++        0x0
++    .end array-data
++
++    :array_2b4
++    .array-data 4
++        0x5
++        0xf
++        0x0
 +    .end array-data
 +.end method
 +
@@ -492,7 +804,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +
 +    if-ltz v1, :cond_35
 +
-+    .line 21
++    .line 43
 +    invoke-static {p0}, Ljava/lang/Float;->isNaN(F)Z
 +
 +    move-result v1
@@ -558,9 +870,76 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +    :goto_35
 +    return v0
 +.end method
++
++.method static publish(I)V
++    .registers 8
++
++    .line 31
++    sget v0, Lcom/daudio/app/dipo/LeafiaBar;->sPublished:I
++
++    if-ne p0, v0, :cond_5
++
++    return-void
++
++    .line 32
++    :cond_5
++    sput p0, Lcom/daudio/app/dipo/LeafiaBar;->sPublished:I
++
++    :try_start_7
++    const-string v0, "android.os.SystemProperties"
++
++    .line 34
++    invoke-static {v0}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
++
++    move-result-object v0
++
++    const-string v1, "set"
++
++    const/4 v2, 0x2
++
++    new-array v3, v2, [Ljava/lang/Class;
++
++    const-class v4, Ljava/lang/String;
++
++    const/4 v5, 0x0
++
++    aput-object v4, v3, v5
++
++    const-class v4, Ljava/lang/String;
++
++    const/4 v6, 0x1
++
++    aput-object v4, v3, v6
++
++    invoke-virtual {v0, v1, v3}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v0
++
++    const/4 v1, 0x0
++
++    new-array v2, v2, [Ljava/lang/Object;
++
++    const-string v3, "sys.leafia.phonebar"
++
++    aput-object v3, v2, v5
++
++    .line 35
++    invoke-static {p0}, Ljava/lang/String;->valueOf(I)Ljava/lang/String;
++
++    move-result-object p0
++
++    aput-object p0, v2, v6
++
++    invoke-virtual {v0, v1, v2}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++    :try_end_30
++    .catchall {:try_start_7 .. :try_end_30} :catchall_30
++
++    :catchall_30
++    return-void
++.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpBridge.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpBridge.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpBridge.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpBridge.smali	2026-11-09 20:53:28.091621867 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpBridge.smali	2026-11-16 19:00:30.735203233 +0000
 @@ -0,0 +1,714 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpBridge;
 +.super Landroid/os/Handler;
@@ -1278,7 +1657,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpConn.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConn.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpConn.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConn.smali	2026-11-09 20:53:28.096293430 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConn.smali	2026-11-16 19:00:30.740074796 +0000
 @@ -0,0 +1,39 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpConn;
 +.super Ljava/lang/Object;
@@ -1321,7 +1700,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpConnect.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConnect.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpConnect.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConnect.smali	2026-11-09 20:53:28.101273731 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpConnect.smali	2026-11-16 19:00:30.745898753 +0000
 @@ -0,0 +1,72 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpConnect;
 +.super Ljava/lang/Thread;
@@ -1395,9 +1774,166 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +    invoke-static {v1, v2, v0}, Landroid/util/Log;->e(Ljava/lang/String;Ljava/lang/String;Ljava/lang/Throwable;)I
 +    return-void
 +.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpGap.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpGap.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpGap.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpGap.smali	2026-11-16 19:00:31.131097674 +0000
+@@ -0,0 +1,153 @@
++.class public final Lcom/daudio/app/dipo/LeafiaCpGap;
++.super Ljava/lang/Object;
++.source "LeafiaCpGap.java"
++
++
++# static fields
++.field static final PLACEHOLDER:I = 0x46
++
++.field static sLastLogged:I = -0x80000000
++
++
++# direct methods
++.method static constructor <clinit>()V
++    .registers 0
++
++    return-void
++.end method
++
++.method private constructor <init>()V
++    .registers 1
++
++    .line 28
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method public static unmapped()I
++    .registers 8
++
++    const/4 v0, 0x0
++
++    .line 34
++    :try_start_1
++    sget-object v1, Lcom/daudio/app/dipo/LeafiaCpTurn;->sCurrent:Ljava/lang/Object;
++
++    if-nez v1, :cond_6
++
++    return v0
++
++    :cond_6
++    const-string v2, "Dx|DM"
++
++    const/4 v3, -0x1
++
++    .line 36
++    invoke-static {v1, v2, v3}, Lcom/daudio/app/dipo/LeafiaCpTurn;->intField(Ljava/lang/Object;Ljava/lang/String;I)I
++
++    move-result v2
++
++    const-string v4, "DD|DS"
++
++    .line 37
++    invoke-static {v1, v4, v3}, Lcom/daudio/app/dipo/LeafiaCpTurn;->intField(Ljava/lang/Object;Ljava/lang/String;I)I
++
++    move-result v3
++
++    const-string v4, "DF|DU"
++
++    .line 38
++    invoke-static {v1, v4, v0}, Lcom/daudio/app/dipo/LeafiaCpTurn;->intField(Ljava/lang/Object;Ljava/lang/String;I)I
++
++    move-result v1
++
++    const/4 v4, 0x0
++
++    const/4 v5, 0x1
++
++    .line 39
++    invoke-static {v2, v3, v1, v4, v5}, Lcom/daudio/app/dipo/LeafiaCpTurn;->drawn(III[II)[I
++
++    move-result-object v4
++
++    mul-int/lit16 v6, v2, 0x3e8
++
++    mul-int/lit8 v7, v3, 0xa
++
++    add-int/2addr v6, v7
++
++    if-nez v4, :cond_27
++
++    const/4 v5, 0x0
++
++    :cond_27
++    add-int/2addr v6, v5
++
++    .line 41
++    sget v5, Lcom/daudio/app/dipo/LeafiaCpGap;->sLastLogged:I
++
++    if-eq v6, v5, :cond_5e
++
++    .line 42
++    sput v6, Lcom/daudio/app/dipo/LeafiaCpGap;->sLastLogged:I
++
++    const-string v5, "LeafiaCP"
++
++    .line 43
++    new-instance v6, Ljava/lang/StringBuilder;
++
++    invoke-direct {v6}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v7, "Leafia: CarPlay maneuver "
++
++    invoke-virtual {v6, v7}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v2, " junction "
++
++    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v6, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v2, " exit "
++
++    invoke-virtual {v6, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v6, v1}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    if-nez v4, :cond_52
++
++    const-string v1, " not in DiPO\'s table - not sent (as stock)"
++
++    goto :goto_54
++
++    :cond_52
++    const-string v1, " not in DiPO\'s table - sent as a drawn turn"
++
++    .line 44
++    :goto_54
++    invoke-virtual {v6, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v6}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    .line 43
++    invoke-static {v5, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_5e
++    .catchall {:try_start_1 .. :try_end_5e} :catchall_63
++
++    :cond_5e
++    if-nez v4, :cond_61
++
++    goto :goto_63
++
++    :cond_61
++    const/16 v0, 0x46
++
++    :catchall_63
++    :goto_63
++    return v0
++.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$1.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$1.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$1.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$1.smali	2026-11-09 20:53:28.618791019 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$1.smali	2026-11-16 19:00:31.126316092 +0000
 @@ -0,0 +1,89 @@
 +.class Lcom/daudio/app/dipo/LeafiaCpHandover$1;
 +.super Ljava/lang/Object;
@@ -1490,7 +2026,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$2.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$2.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$2.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$2.smali	2026-11-09 20:53:28.623107626 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$2.smali	2026-11-16 19:00:31.135785182 +0000
 @@ -0,0 +1,89 @@
 +.class Lcom/daudio/app/dipo/LeafiaCpHandover$2;
 +.super Ljava/lang/Object;
@@ -1583,7 +2119,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$3.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$3.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$3.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$3.smali	2026-11-09 20:53:28.611019785 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$3.smali	2026-11-16 19:00:31.121730095 +0000
 @@ -0,0 +1,163 @@
 +.class Lcom/daudio/app/dipo/LeafiaCpHandover$3;
 +.super Ljava/lang/Object;
@@ -1750,7 +2286,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$4.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$4.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover$4.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$4.smali	2026-11-09 20:53:28.602329202 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover$4.smali	2026-11-16 19:00:31.117600870 +0000
 @@ -0,0 +1,168 @@
 +.class Lcom/daudio/app/dipo/LeafiaCpHandover$4;
 +.super Ljava/lang/Object;
@@ -1922,7 +2458,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpHandover.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover.smali	2026-11-09 20:53:28.578666450 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpHandover.smali	2026-11-16 19:00:31.103080642 +0000
 @@ -0,0 +1,1806 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpHandover;
 +.super Ljava/lang/Object;
@@ -3732,7 +4268,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpIap2Listener.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpIap2Listener.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpIap2Listener.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpIap2Listener.smali	2026-11-09 20:53:28.105300508 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpIap2Listener.smali	2026-11-16 19:00:30.750667594 +0000
 @@ -0,0 +1,95 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpIap2Listener;
 +.super Lcom/tcc/iap2/IIap2Listener$Stub;
@@ -3831,7 +4367,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpLane.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpLane.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpLane.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpLane.smali	2026-11-09 20:53:28.587329704 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpLane.smali	2026-11-16 19:00:31.107349243 +0000
 @@ -0,0 +1,786 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpLane;
 +.super Ljava/lang/Object;
@@ -4621,7 +5157,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpReconnect$1.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect$1.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpReconnect$1.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect$1.smali	2026-11-09 20:53:28.549142968 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect$1.smali	2026-11-16 19:00:31.082182306 +0000
 @@ -0,0 +1,100 @@
 +.class Lcom/daudio/app/dipo/LeafiaCpReconnect$1;
 +.super Ljava/lang/Object;
@@ -4725,7 +5261,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpReconnect.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpReconnect.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect.smali	2026-11-09 20:53:28.558833848 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpReconnect.smali	2026-11-16 19:00:31.087188270 +0000
 @@ -0,0 +1,567 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpReconnect;
 +.super Ljava/lang/Object;
@@ -5296,7 +5832,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpRegister.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpRegister.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpRegister.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpRegister.smali	2026-11-09 20:53:28.597472346 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpRegister.smali	2026-11-16 19:00:31.112739668 +0000
 @@ -0,0 +1,546 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpRegister;
 +.super Ljava/lang/Object;
@@ -5846,7 +6382,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpTurn.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpTurn.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaCpTurn.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpTurn.smali	2026-11-09 20:53:28.631931284 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaCpTurn.smali	2026-11-16 19:00:31.155225489 +0000
 @@ -0,0 +1,1040 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaCpTurn;
 +.super Ljava/lang/Object;
@@ -6888,9 +7424,1485 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +    :goto_157
 +    return-void
 +.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$1.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$1.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$1.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$1.smali	2026-11-16 19:00:31.145064413 +0000
+@@ -0,0 +1,154 @@
++.class Lcom/daudio/app/dipo/LeafiaHotspot$1;
++.super Landroid/content/BroadcastReceiver;
++.source "LeafiaHotspot.java"
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingMethod;
++    value = Lcom/daudio/app/dipo/LeafiaHotspot;->init(Landroid/content/Context;)V
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x0
++    name = null
++.end annotation
++
++
++# direct methods
++.method constructor <init>()V
++    .registers 1
++
++    .line 73
++    invoke-direct {p0}, Landroid/content/BroadcastReceiver;-><init>()V
++
++    return-void
++.end method
++
++
++# virtual methods
++.method public onReceive(Landroid/content/Context;Landroid/content/Intent;)V
++    .registers 8
++
++    .line 76
++    invoke-virtual {p2}, Landroid/content/Intent;->getAction()Ljava/lang/String;
++
++    move-result-object p1
++
++    const-string v0, "com.hkmc.intent.action.ACTION_ACC_STATUS_CHANGED"
++
++    .line 77
++    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    const/4 v1, 0x0
++
++    const/4 v2, -0x1
++
++    if-eqz v0, :cond_3e
++
++    const-string p1, "android.ibox.mode.EXTRA_ACC_STATUS"
++
++    .line 78
++    invoke-virtual {p2, p1, v2}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
++
++    move-result p1
++
++    sput p1, Lcom/daudio/app/dipo/LeafiaHotspot;->sAcc:I
++
++    .line 79
++    sget p1, Lcom/daudio/app/dipo/LeafiaHotspot;->sAcc:I
++
++    const/16 p2, 0xff
++
++    if-eq p1, p2, :cond_6d
++
++    sget p1, Lcom/daudio/app/dipo/LeafiaHotspot;->sAcc:I
++
++    if-eq p1, v2, :cond_6d
++
++    new-instance p1, Ljava/lang/StringBuilder;
++
++    invoke-direct {p1}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string p2, "car on again (ACC "
++
++    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    sget p2, Lcom/daudio/app/dipo/LeafiaHotspot;->sAcc:I
++
++    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string p2, ")"
++
++    invoke-virtual {p1, p2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {p1}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p1
++
++    const-wide/16 v2, 0xbb8
++
++    invoke-static {p1, v2, v3, v1}, Lcom/daudio/app/dipo/LeafiaHotspot;->later(Ljava/lang/String;JZ)V
++
++    goto :goto_6d
++
++    :cond_3e
++    const-string v0, "android.net.wifi.WIFI_AP_STATE_CHANGED"
++
++    .line 80
++    invoke-virtual {v0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p1
++
++    const-wide/16 v3, 0x5dc
++
++    if-eqz p1, :cond_65
++
++    const-string p1, "wifi_state"
++
++    .line 81
++    invoke-virtual {p2, p1, v2}, Landroid/content/Intent;->getIntExtra(Ljava/lang/String;I)I
++
++    move-result p1
++
++    const/16 p2, 0xb
++
++    if-ne p1, p2, :cond_5b
++
++    const-wide/16 p1, 0x1f40
++
++    const/4 v0, 0x1
++
++    const-string v1, "hotspot turned off"
++
++    .line 82
++    invoke-static {v1, p1, p2, v0}, Lcom/daudio/app/dipo/LeafiaHotspot;->later(Ljava/lang/String;JZ)V
++
++    goto :goto_6d
++
++    :cond_5b
++    const/16 p2, 0xd
++
++    if-ne p1, p2, :cond_6d
++
++    const-string p1, "hotspot on"
++
++    .line 83
++    invoke-static {p1, v3, v4}, Lcom/daudio/app/dipo/LeafiaHotspot;->syncLater(Ljava/lang/String;J)V
++
++    goto :goto_6d
++
++    :cond_65
++    const-string p1, "phone connected over Bluetooth"
++
++    .line 85
++    invoke-static {p1}, Lcom/daudio/app/dipo/LeafiaHotspot;->sync(Ljava/lang/String;)V
++
++    .line 86
++    invoke-static {p1, v3, v4, v1}, Lcom/daudio/app/dipo/LeafiaHotspot;->later(Ljava/lang/String;JZ)V
++
++    :cond_6d
++    :goto_6d
++    return-void
++.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$2.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$2.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$2.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$2.smali	2026-11-16 19:00:31.150131087 +0000
+@@ -0,0 +1,58 @@
++.class Lcom/daudio/app/dipo/LeafiaHotspot$2;
++.super Ljava/lang/Object;
++.source "LeafiaHotspot.java"
++
++# interfaces
++.implements Ljava/lang/Runnable;
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingMethod;
++    value = Lcom/daudio/app/dipo/LeafiaHotspot;->later(Ljava/lang/String;JZ)V
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x0
++    name = null
++.end annotation
++
++
++# instance fields
++.field final synthetic val$soft:Z
++
++.field final synthetic val$why:Ljava/lang/String;
++
++
++# direct methods
++.method constructor <init>(Ljava/lang/String;Z)V
++    .registers 3
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "()V"
++        }
++    .end annotation
++
++    .line 99
++    iput-object p1, p0, Lcom/daudio/app/dipo/LeafiaHotspot$2;->val$why:Ljava/lang/String;
++
++    iput-boolean p2, p0, Lcom/daudio/app/dipo/LeafiaHotspot$2;->val$soft:Z
++
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++
++# virtual methods
++.method public run()V
++    .registers 3
++
++    .line 102
++    iget-object v0, p0, Lcom/daudio/app/dipo/LeafiaHotspot$2;->val$why:Ljava/lang/String;
++
++    iget-boolean v1, p0, Lcom/daudio/app/dipo/LeafiaHotspot$2;->val$soft:Z
++
++    invoke-static {v0, v1}, Lcom/daudio/app/dipo/LeafiaHotspot;->ensure(Ljava/lang/String;Z)V
++
++    return-void
++.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$3.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$3.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot$3.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot$3.smali	2026-11-16 19:00:31.093491316 +0000
+@@ -0,0 +1,52 @@
++.class Lcom/daudio/app/dipo/LeafiaHotspot$3;
++.super Ljava/lang/Object;
++.source "LeafiaHotspot.java"
++
++# interfaces
++.implements Ljava/lang/Runnable;
++
++
++# annotations
++.annotation system Ldalvik/annotation/EnclosingMethod;
++    value = Lcom/daudio/app/dipo/LeafiaHotspot;->syncLater(Ljava/lang/String;J)V
++.end annotation
++
++.annotation system Ldalvik/annotation/InnerClass;
++    accessFlags = 0x0
++    name = null
++.end annotation
++
++
++# instance fields
++.field final synthetic val$why:Ljava/lang/String;
++
++
++# direct methods
++.method constructor <init>(Ljava/lang/String;)V
++    .registers 2
++    .annotation system Ldalvik/annotation/Signature;
++        value = {
++            "()V"
++        }
++    .end annotation
++
++    .line 108
++    iput-object p1, p0, Lcom/daudio/app/dipo/LeafiaHotspot$3;->val$why:Ljava/lang/String;
++
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++
++# virtual methods
++.method public run()V
++    .registers 2
++
++    .line 111
++    iget-object v0, p0, Lcom/daudio/app/dipo/LeafiaHotspot$3;->val$why:Ljava/lang/String;
++
++    invoke-static {v0}, Lcom/daudio/app/dipo/LeafiaHotspot;->sync(Ljava/lang/String;)V
++
++    return-void
++.end method
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaHotspot.smali	1970-01-01 00:00:00.000000000 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaHotspot.smali	2026-11-16 19:00:31.140437047 +0000
+@@ -0,0 +1,1196 @@
++.class public final Lcom/daudio/app/dipo/LeafiaHotspot;
++.super Ljava/lang/Object;
++.source "LeafiaHotspot.java"
++
++
++# static fields
++.field static final ACC_OFF:I = 0xff
++
++.field static final ACC_ON_DELAY_MS:J = 0xbb8L
++
++.field static final ACTION_ACC:Ljava/lang/String; = "com.hkmc.intent.action.ACTION_ACC_STATUS_CHANGED"
++
++.field static final ACTION_AP:Ljava/lang/String; = "android.net.wifi.WIFI_AP_STATE_CHANGED"
++
++.field static final AP_DISABLED:I = 0xb
++
++.field static final AP_ENABLED:I = 0xd
++
++.field static final AP_MODE_CONNECTIVITY:I = 0x2
++
++.field static final AP_OFF_DELAY_MS:J = 0x1f40L
++
++.field static final BOOT_DELAY_MS:J = 0x4e20L
++
++.field static final CONNECT_DELAY_MS:J = 0x5dcL
++
++.field static final EXTRA_ACC:Ljava/lang/String; = "android.ibox.mode.EXTRA_ACC_STATUS"
++
++.field static final HOSTAPD_CONF:Ljava/lang/String; = "/data/misc/wifi/hostapd.conf"
++
++.field static final MIN_GAP_MS:J = 0x3a98L
++
++.field static final SYNC_DELAY_MS:J = 0x5dcL
++
++.field static final TAG:Ljava/lang/String; = "LeafiaCP"
++
++.field static volatile sAcc:I = -0x1
++
++.field static sContext:Landroid/content/Context; = null
++
++.field static sHandler:Landroid/os/Handler; = null
++
++.field static sLastState:Ljava/lang/String; = null
++
++.field static sLastTry:J = -0x3a98L
++
++
++# direct methods
++.method static constructor <clinit>()V
++    .registers 0
++
++    return-void
++.end method
++
++.method private constructor <init>()V
++    .registers 1
++
++    .line 61
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method public static decide(ZZIZZ)I
++    .registers 6
++
++    const/4 v0, 0x0
++
++    if-eqz p0, :cond_11
++
++    if-nez p1, :cond_11
++
++    const/16 p0, 0xff
++
++    if-ne p2, p0, :cond_a
++
++    goto :goto_11
++
++    :cond_a
++    if-eqz p4, :cond_f
++
++    if-eqz p3, :cond_f
++
++    return v0
++
++    :cond_f
++    const/4 p0, 0x1
++
++    return p0
++
++    :cond_11
++    :goto_11
++    return v0
++.end method
++
++.method static declared-synchronized ensure(Ljava/lang/String;Z)V
++    .registers 13
++
++    const-class v0, Lcom/daudio/app/dipo/LeafiaHotspot;
++
++    monitor-enter v0
++
++    .line 192
++    :try_start_3
++    invoke-static {p0}, Lcom/daudio/app/dipo/LeafiaHotspot;->sync(Ljava/lang/String;)V
++    :try_end_6
++    .catchall {:try_start_3 .. :try_end_6} :catchall_fc
++
++    .line 194
++    :try_start_6
++    invoke-static {}, Landroid/os/SystemClock;->elapsedRealtime()J
++
++    move-result-wide v1
++
++    .line 195
++    sget-wide v3, Lcom/daudio/app/dipo/LeafiaHotspot;->sLastTry:J
++    :try_end_c
++    .catchall {:try_start_6 .. :try_end_c} :catchall_db
++
++    sub-long v3, v1, v3
++
++    const-wide/16 v5, 0x3a98
++
++    cmp-long v7, v3, v5
++
++    if-gez v7, :cond_16
++
++    monitor-exit v0
++
++    return-void
++
++    .line 196
++    :cond_16
++    :try_start_16
++    sget-object v3, Lcom/daudio/app/dipo/LeafiaHotspot;->sContext:Landroid/content/Context;
++
++    const-string v4, "wifi"
++
++    .line 197
++    invoke-virtual {v3, v4}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object v4
++
++    check-cast v4, Landroid/net/wifi/WifiManager;
++    :try_end_20
++    .catchall {:try_start_16 .. :try_end_20} :catchall_db
++
++    if-nez v4, :cond_24
++
++    .line 198
++    monitor-exit v0
++
++    return-void
++
++    .line 199
++    :cond_24
++    :try_start_24
++    const-class v5, Landroid/net/wifi/WifiManager;
++
++    const-string v6, "isWifiApEnabled"
++
++    const/4 v7, 0x0
++
++    new-array v8, v7, [Ljava/lang/Class;
++
++    invoke-virtual {v5, v6, v8}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v5
++
++    new-array v6, v7, [Ljava/lang/Object;
++
++    invoke-virtual {v5, v4, v6}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v5
++
++    check-cast v5, Ljava/lang/Boolean;
++
++    invoke-virtual {v5}, Ljava/lang/Boolean;->booleanValue()Z
++
++    move-result v5
++
++    .line 200
++    const-class v6, Landroid/net/wifi/WifiManager;
++
++    const-string v8, "getWifiApMode"
++
++    new-array v9, v7, [Ljava/lang/Class;
++
++    invoke-virtual {v6, v8, v9}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v6
++
++    new-array v8, v7, [Ljava/lang/Object;
++
++    invoke-virtual {v6, v4, v8}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v6
++
++    check-cast v6, Ljava/lang/Integer;
++
++    invoke-virtual {v6}, Ljava/lang/Integer;->intValue()I
++
++    move-result v6
++
++    .line 201
++    const-class v8, Landroid/net/wifi/WifiManager;
++
++    const-string v9, "getWifiApConfiguration"
++
++    new-array v10, v7, [Ljava/lang/Class;
++
++    invoke-virtual {v8, v9, v10}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v8
++
++    new-array v9, v7, [Ljava/lang/Object;
++
++    invoke-virtual {v8, v4, v9}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v8
++
++    check-cast v8, Landroid/net/wifi/WifiConfiguration;
++
++    .line 202
++    invoke-static {v3}, Lcom/daudio/app/dipo/LeafiaHotspot;->wireless(Landroid/content/Context;)Z
++
++    move-result v3
++
++    sget v9, Lcom/daudio/app/dipo/LeafiaHotspot;->sAcc:I
++
++    invoke-virtual {v4}, Landroid/net/wifi/WifiManager;->isWifiEnabled()Z
++
++    move-result v10
++
++    invoke-static {v3, v5, v9, v10, p1}, Lcom/daudio/app/dipo/LeafiaHotspot;->decide(ZZIZZ)I
++
++    move-result p1
++    :try_end_71
++    .catchall {:try_start_24 .. :try_end_71} :catchall_db
++
++    if-nez p1, :cond_75
++
++    monitor-exit v0
++
++    return-void
++
++    .line 203
++    :cond_75
++    :try_start_75
++    sput-wide v1, Lcom/daudio/app/dipo/LeafiaHotspot;->sLastTry:J
++
++    .line 204
++    const-class p1, Landroid/net/wifi/WifiManager;
++
++    const-string v1, "setWifiApEnabledForConnectivity"
++
++    const/4 v2, 0x2
++
++    new-array v3, v2, [Ljava/lang/Class;
++
++    const-class v5, Landroid/net/wifi/WifiConfiguration;
++
++    aput-object v5, v3, v7
++
++    sget-object v5, Ljava/lang/Boolean;->TYPE:Ljava/lang/Class;
++
++    const/4 v9, 0x1
++
++    aput-object v5, v3, v9
++
++    invoke-virtual {p1, v1, v3}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object p1
++
++    new-array v1, v2, [Ljava/lang/Object;
++
++    aput-object v8, v1, v7
++
++    .line 205
++    sget-object v2, Ljava/lang/Boolean;->TRUE:Ljava/lang/Boolean;
++
++    aput-object v2, v1, v9
++
++    invoke-virtual {p1, v4, v1}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object p1
++
++    const-string v1, "LeafiaCP"
++
++    .line 206
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "Leafia: projection hotspot was off (Wi-Fi client "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v4}, Landroid/net/wifi/WifiManager;->isWifiEnabled()Z
++
++    move-result v3
++
++    if-eqz v3, :cond_ac
++
++    const-string v3, "on"
++
++    goto :goto_ae
++
++    :cond_ac
++    const-string v3, "off"
++
++    :goto_ae
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v3, ", AP mode "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, v6}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    if-nez v8, :cond_be
++
++    const-string v3, ", no saved AP config"
++
++    goto :goto_c0
++
++    :cond_be
++    const-string v3, ""
++
++    .line 207
++    :goto_c0
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v3, "): turned it on ("
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v3, ") -> "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p1
++
++    .line 206
++    invoke-static {v1, p1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_da
++    .catchall {:try_start_75 .. :try_end_da} :catchall_db
++
++    goto :goto_fa
++
++    :catchall_db
++    move-exception p1
++
++    :try_start_dc
++    const-string v1, "LeafiaCP"
++
++    .line 209
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "Leafia: turning the projection hotspot on failed ("
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string p0, "): "
++
++    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, p1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p0
++
++    invoke-static {v1, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_fa
++    .catchall {:try_start_dc .. :try_end_fa} :catchall_fc
++
++    .line 211
++    :goto_fa
++    monitor-exit v0
++
++    return-void
++
++    :catchall_fc
++    move-exception p0
++
++    monitor-exit v0
++
++    throw p0
++.end method
++
++.method static hostapdSsid()Ljava/lang/String;
++    .registers 6
++
++    const/4 v0, 0x0
++
++    .line 130
++    :try_start_1
++    new-instance v1, Ljava/io/BufferedReader;
++
++    new-instance v2, Ljava/io/FileReader;
++
++    const-string v3, "/data/misc/wifi/hostapd.conf"
++
++    invoke-direct {v2, v3}, Ljava/io/FileReader;-><init>(Ljava/lang/String;)V
++
++    invoke-direct {v1, v2}, Ljava/io/BufferedReader;-><init>(Ljava/io/Reader;)V
++    :try_end_d
++    .catchall {:try_start_1 .. :try_end_d} :catchall_2a
++
++    .line 131
++    :cond_d
++    :try_start_d
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->readLine()Ljava/lang/String;
++
++    move-result-object v2
++
++    if-eqz v2, :cond_24
++
++    const-string v3, "ssid="
++
++    .line 132
++    invoke-virtual {v2, v3}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
++
++    move-result v3
++
++    if-eqz v3, :cond_d
++
++    const/4 v3, 0x5
++
++    invoke-virtual {v2, v3}, Ljava/lang/String;->substring(I)Ljava/lang/String;
++
++    move-result-object v0
++    :try_end_20
++    .catchall {:try_start_d .. :try_end_20} :catchall_28
++
++    .line 137
++    :try_start_20
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_23
++    .catchall {:try_start_20 .. :try_end_23} :catchall_23
++
++    :catchall_23
++    return-object v0
++
++    :cond_24
++    :goto_24
++    :try_start_24
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_27
++    .catchall {:try_start_24 .. :try_end_27} :catchall_45
++
++    goto :goto_45
++
++    :catchall_28
++    move-exception v2
++
++    goto :goto_2c
++
++    :catchall_2a
++    move-exception v2
++
++    move-object v1, v0
++
++    :goto_2c
++    :try_start_2c
++    const-string v3, "LeafiaCP"
++
++    .line 134
++    new-instance v4, Ljava/lang/StringBuilder;
++
++    invoke-direct {v4}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v5, "Leafia: can\'t read /data/misc/wifi/hostapd.conf: "
++
++    invoke-virtual {v4, v5}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v4, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v4}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v3, v2}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_42
++    .catchall {:try_start_2c .. :try_end_42} :catchall_46
++
++    if-eqz v1, :cond_45
++
++    goto :goto_24
++
++    :catchall_45
++    :cond_45
++    :goto_45
++    return-object v0
++
++    :catchall_46
++    move-exception v0
++
++    if-eqz v1, :cond_4c
++
++    .line 137
++    :try_start_49
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_4c
++    .catchall {:try_start_49 .. :try_end_4c} :catchall_4c
++
++    .line 140
++    :catchall_4c
++    :cond_4c
++    goto :goto_4e
++
++    :goto_4d
++    throw v0
++
++    :goto_4e
++    goto :goto_4d
++.end method
++
++.method public static declared-synchronized init(Landroid/content/Context;)V
++    .registers 5
++
++    const-class v0, Lcom/daudio/app/dipo/LeafiaHotspot;
++
++    monitor-enter v0
++
++    .line 67
++    :try_start_3
++    sget-object v1, Lcom/daudio/app/dipo/LeafiaHotspot;->sContext:Landroid/content/Context;
++
++    if-nez v1, :cond_45
++
++    if-nez p0, :cond_a
++
++    goto :goto_45
++
++    .line 68
++    :cond_a
++    invoke-virtual {p0}, Landroid/content/Context;->getApplicationContext()Landroid/content/Context;
++
++    move-result-object v1
++
++    if-eqz v1, :cond_14
++
++    invoke-virtual {p0}, Landroid/content/Context;->getApplicationContext()Landroid/content/Context;
++
++    move-result-object p0
++
++    :cond_14
++    sput-object p0, Lcom/daudio/app/dipo/LeafiaHotspot;->sContext:Landroid/content/Context;
++
++    .line 69
++    new-instance p0, Landroid/os/Handler;
++
++    invoke-static {}, Landroid/os/Looper;->getMainLooper()Landroid/os/Looper;
++
++    move-result-object v1
++
++    invoke-direct {p0, v1}, Landroid/os/Handler;-><init>(Landroid/os/Looper;)V
++
++    sput-object p0, Lcom/daudio/app/dipo/LeafiaHotspot;->sHandler:Landroid/os/Handler;
++
++    .line 70
++    new-instance p0, Landroid/content/IntentFilter;
++
++    const-string v1, "android.bluetooth.device.action.ACL_CONNECTED"
++
++    invoke-direct {p0, v1}, Landroid/content/IntentFilter;-><init>(Ljava/lang/String;)V
++
++    const-string v1, "com.hkmc.intent.action.ACTION_ACC_STATUS_CHANGED"
++
++    .line 71
++    invoke-virtual {p0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
++
++    const-string v1, "android.net.wifi.WIFI_AP_STATE_CHANGED"
++
++    .line 72
++    invoke-virtual {p0, v1}, Landroid/content/IntentFilter;->addAction(Ljava/lang/String;)V
++
++    .line 73
++    sget-object v1, Lcom/daudio/app/dipo/LeafiaHotspot;->sContext:Landroid/content/Context;
++
++    new-instance v2, Lcom/daudio/app/dipo/LeafiaHotspot$1;
++
++    invoke-direct {v2}, Lcom/daudio/app/dipo/LeafiaHotspot$1;-><init>()V
++
++    invoke-virtual {v1, v2, p0}, Landroid/content/Context;->registerReceiver(Landroid/content/BroadcastReceiver;Landroid/content/IntentFilter;)Landroid/content/Intent;
++
++    const-string p0, "start"
++
++    const-wide/16 v1, 0x4e20
++
++    const/4 v3, 0x0
++
++    .line 90
++    invoke-static {p0, v1, v2, v3}, Lcom/daudio/app/dipo/LeafiaHotspot;->later(Ljava/lang/String;JZ)V
++    :try_end_44
++    .catchall {:try_start_3 .. :try_end_44} :catchall_47
++
++    goto :goto_5e
++
++    .line 67
++    :cond_45
++    :goto_45
++    monitor-exit v0
++
++    return-void
++
++    :catchall_47
++    move-exception p0
++
++    :try_start_48
++    const-string v1, "LeafiaCP"
++
++    .line 92
++    new-instance v2, Ljava/lang/StringBuilder;
++
++    invoke-direct {v2}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v3, "Leafia: hotspot watch not started: "
++
++    invoke-virtual {v2, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v2}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p0
++
++    invoke-static {v1, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_5e
++    .catchall {:try_start_48 .. :try_end_5e} :catchall_60
++
++    .line 94
++    :goto_5e
++    monitor-exit v0
++
++    return-void
++
++    :catchall_60
++    move-exception p0
++
++    monitor-exit v0
++
++    throw p0
++.end method
++
++.method static later(Ljava/lang/String;JZ)V
++    .registers 6
++
++    .line 99
++    sget-object v0, Lcom/daudio/app/dipo/LeafiaHotspot;->sHandler:Landroid/os/Handler;
++
++    new-instance v1, Lcom/daudio/app/dipo/LeafiaHotspot$2;
++
++    invoke-direct {v1, p0, p3}, Lcom/daudio/app/dipo/LeafiaHotspot$2;-><init>(Ljava/lang/String;Z)V
++
++    invoke-virtual {v0, v1, p1, p2}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
++
++    return-void
++.end method
++
++.method public static needSync(ZILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 6
++
++    const/4 v0, 0x0
++
++    if-eqz p0, :cond_18
++
++    const/4 p0, 0x2
++
++    if-ne p1, p0, :cond_18
++
++    if-eqz p2, :cond_18
++
++    if-nez p3, :cond_b
++
++    goto :goto_18
++
++    .line 124
++    :cond_b
++    invoke-virtual {p2, p3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_18
++
++    invoke-virtual {p3, p4}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    if-nez p0, :cond_18
++
++    const/4 v0, 0x1
++
++    :cond_18
++    :goto_18
++    return v0
++.end method
++
++.method static declared-synchronized sync(Ljava/lang/String;)V
++    .registers 13
++
++    const-class v0, Lcom/daudio/app/dipo/LeafiaHotspot;
++
++    monitor-enter v0
++
++    .line 146
++    :try_start_3
++    sget-object v1, Lcom/daudio/app/dipo/LeafiaHotspot;->sContext:Landroid/content/Context;
++
++    const-string v2, "wifi"
++
++    invoke-virtual {v1, v2}, Landroid/content/Context;->getSystemService(Ljava/lang/String;)Ljava/lang/Object;
++
++    move-result-object v1
++
++    check-cast v1, Landroid/net/wifi/WifiManager;
++    :try_end_d
++    .catchall {:try_start_3 .. :try_end_d} :catchall_151
++
++    if-nez v1, :cond_11
++
++    .line 147
++    monitor-exit v0
++
++    return-void
++
++    .line 148
++    :cond_11
++    :try_start_11
++    const-class v2, Landroid/net/wifi/WifiManager;
++
++    const-string v3, "isWifiApEnabled"
++
++    const/4 v4, 0x0
++
++    new-array v5, v4, [Ljava/lang/Class;
++
++    invoke-virtual {v2, v3, v5}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v2
++
++    new-array v3, v4, [Ljava/lang/Object;
++
++    invoke-virtual {v2, v1, v3}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v2
++
++    check-cast v2, Ljava/lang/Boolean;
++
++    invoke-virtual {v2}, Ljava/lang/Boolean;->booleanValue()Z
++
++    move-result v2
++
++    .line 149
++    const-class v3, Landroid/net/wifi/WifiManager;
++
++    const-string v5, "getWifiApMode"
++
++    new-array v6, v4, [Ljava/lang/Class;
++
++    invoke-virtual {v3, v5, v6}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v3
++
++    new-array v5, v4, [Ljava/lang/Object;
++
++    invoke-virtual {v3, v1, v5}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v3
++
++    check-cast v3, Ljava/lang/Integer;
++
++    invoke-virtual {v3}, Ljava/lang/Integer;->intValue()I
++
++    move-result v3
++    :try_end_3e
++    .catchall {:try_start_11 .. :try_end_3e} :catchall_151
++
++    if-nez v2, :cond_42
++
++    .line 150
++    monitor-exit v0
++
++    return-void
++
++    .line 151
++    :cond_42
++    :try_start_42
++    const-class v5, Landroid/net/wifi/WifiManager;
++
++    const-string v6, "getWifiApConfiguration"
++
++    new-array v7, v4, [Ljava/lang/Class;
++
++    invoke-virtual {v5, v6, v7}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v5
++
++    new-array v6, v4, [Ljava/lang/Object;
++
++    invoke-virtual {v5, v1, v6}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v5
++
++    check-cast v5, Landroid/net/wifi/WifiConfiguration;
++    :try_end_54
++    .catchall {:try_start_42 .. :try_end_54} :catchall_151
++
++    if-nez v5, :cond_58
++
++    .line 152
++    monitor-exit v0
++
++    return-void
++
++    .line 153
++    :cond_58
++    :try_start_58
++    const-class v6, Landroid/net/wifi/WifiConfiguration;
++
++    const-string v7, "ConnectivitySSID"
++
++    invoke-virtual {v6, v7}, Ljava/lang/Class;->getField(Ljava/lang/String;)Ljava/lang/reflect/Field;
++
++    move-result-object v6
++
++    .line 154
++    const-class v7, Landroid/net/wifi/WifiConfiguration;
++
++    const-string v8, "ConnectivityPSK"
++
++    invoke-virtual {v7, v8}, Ljava/lang/Class;->getField(Ljava/lang/String;)Ljava/lang/reflect/Field;
++
++    move-result-object v7
++
++    .line 155
++    invoke-virtual {v6, v5}, Ljava/lang/reflect/Field;->get(Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v8
++
++    check-cast v8, Ljava/lang/String;
++
++    .line 156
++    invoke-static {}, Lcom/daudio/app/dipo/LeafiaHotspot;->hostapdSsid()Ljava/lang/String;
++
++    move-result-object v9
++
++    .line 157
++    iget-object v10, v5, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    invoke-static {v2, v3, v9, v10, v8}, Lcom/daudio/app/dipo/LeafiaHotspot;->needSync(ZILjava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
++
++    move-result v2
++
++    .line 158
++    new-instance v10, Ljava/lang/StringBuilder;
++
++    invoke-direct {v10}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v11, "AP mode "
++
++    invoke-virtual {v10, v11}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v10, v3}, Ljava/lang/StringBuilder;->append(I)Ljava/lang/StringBuilder;
++
++    const-string v3, ", broadcast "
++
++    invoke-virtual {v10, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    if-nez v9, :cond_8f
++
++    const-string v3, "unknown"
++
++    goto :goto_a5
++
++    :cond_8f
++    iget-object v3, v5, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    invoke-virtual {v9, v3}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v3
++
++    if-eqz v3, :cond_9a
++
++    const-string v3, "= hotspot name"
++
++    goto :goto_a5
++
++    .line 159
++    :cond_9a
++    invoke-virtual {v9, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v3
++
++    if-eqz v3, :cond_a3
++
++    const-string v3, "= projection name"
++
++    goto :goto_a5
++
++    :cond_a3
++    const-string v3, "other"
++
++    :goto_a5
++    invoke-virtual {v10, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v3, ", names "
++
++    invoke-virtual {v10, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    iget-object v3, v5, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    if-eqz v3, :cond_bc
++
++    iget-object v3, v5, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v3
++
++    if-eqz v3, :cond_bc
++
++    const-string v3, "equal"
++
++    goto :goto_be
++
++    :cond_bc
++    const-string v3, "differ"
++
++    :goto_be
++    invoke-virtual {v10, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v10}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++
++    .line 160
++    sget-object v8, Lcom/daudio/app/dipo/LeafiaHotspot;->sLastState:Ljava/lang/String;
++
++    invoke-virtual {v3, v8}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v8
++
++    if-nez v8, :cond_f7
++
++    .line 161
++    sput-object v3, Lcom/daudio/app/dipo/LeafiaHotspot;->sLastState:Ljava/lang/String;
++
++    const-string v8, "LeafiaCP"
++
++    .line 162
++    new-instance v9, Ljava/lang/StringBuilder;
++
++    invoke-direct {v9}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v10, "Leafia: projection network check ("
++
++    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v9, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v10, "): "
++
++    invoke-virtual {v9, v10}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v9, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    if-eqz v2, :cond_eb
++
++    const-string v3, " -> fixing"
++
++    goto :goto_ed
++
++    :cond_eb
++    const-string v3, ""
++
++    :goto_ed
++    invoke-virtual {v9, v3}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v9}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v3
++
++    invoke-static {v8, v3}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_f7
++    .catchall {:try_start_58 .. :try_end_f7} :catchall_151
++
++    :cond_f7
++    if-nez v2, :cond_fb
++
++    .line 164
++    monitor-exit v0
++
++    return-void
++
++    .line 165
++    :cond_fb
++    :try_start_fb
++    const-class v2, Landroid/net/wifi/WifiConfiguration;
++
++    const/4 v3, 0x1
++
++    new-array v8, v3, [Ljava/lang/Class;
++
++    const-class v9, Landroid/net/wifi/WifiConfiguration;
++
++    aput-object v9, v8, v4
++
++    invoke-virtual {v2, v8}, Ljava/lang/Class;->getConstructor([Ljava/lang/Class;)Ljava/lang/reflect/Constructor;
++
++    move-result-object v2
++
++    new-array v8, v3, [Ljava/lang/Object;
++
++    aput-object v5, v8, v4
++
++    invoke-virtual {v2, v8}, Ljava/lang/reflect/Constructor;->newInstance([Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v2
++
++    check-cast v2, Landroid/net/wifi/WifiConfiguration;
++
++    .line 166
++    iget-object v8, v5, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    invoke-virtual {v6, v2, v8}, Ljava/lang/reflect/Field;->set(Ljava/lang/Object;Ljava/lang/Object;)V
++
++    .line 167
++    iget-object v5, v5, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
++
++    invoke-virtual {v7, v2, v5}, Ljava/lang/reflect/Field;->set(Ljava/lang/Object;Ljava/lang/Object;)V
++
++    .line 168
++    const-class v5, Landroid/net/wifi/WifiManager;
++
++    const-string v6, "setWifiApConfiguration"
++
++    new-array v7, v3, [Ljava/lang/Class;
++
++    const-class v8, Landroid/net/wifi/WifiConfiguration;
++
++    aput-object v8, v7, v4
++
++    invoke-virtual {v5, v6, v7}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v5
++
++    new-array v3, v3, [Ljava/lang/Object;
++
++    aput-object v2, v3, v4
++
++    invoke-virtual {v5, v1, v3}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v1
++
++    const-string v2, "LeafiaCP"
++
++    .line 169
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v4, "Leafia: this firmware\'s hotspot broadcasts its own network name, not the one phones are told to join: set the projection network name/password to the broadcast ones ("
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v4, ") -> "
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v1
++
++    invoke-static {v2, v1}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_150
++    .catchall {:try_start_fb .. :try_end_150} :catchall_151
++
++    goto :goto_170
++
++    :catchall_151
++    move-exception v1
++
++    :try_start_152
++    const-string v2, "LeafiaCP"
++
++    .line 172
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v4, "Leafia: matching the projection network name failed ("
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string p0, "): "
++
++    invoke-virtual {v3, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p0
++
++    invoke-static {v2, p0}, Landroid/util/Log;->w(Ljava/lang/String;Ljava/lang/String;)I
++    :try_end_170
++    .catchall {:try_start_152 .. :try_end_170} :catchall_172
++
++    .line 174
++    :goto_170
++    monitor-exit v0
++
++    return-void
++
++    :catchall_172
++    move-exception p0
++
++    monitor-exit v0
++
++    throw p0
++.end method
++
++.method static syncLater(Ljava/lang/String;J)V
++    .registers 5
++
++    .line 108
++    sget-object v0, Lcom/daudio/app/dipo/LeafiaHotspot;->sHandler:Landroid/os/Handler;
++
++    new-instance v1, Lcom/daudio/app/dipo/LeafiaHotspot$3;
++
++    invoke-direct {v1, p0}, Lcom/daudio/app/dipo/LeafiaHotspot$3;-><init>(Ljava/lang/String;)V
++
++    invoke-virtual {v0, v1, p1, p2}, Landroid/os/Handler;->postDelayed(Ljava/lang/Runnable;J)Z
++
++    return-void
++.end method
++
++.method static wireless(Landroid/content/Context;)Z
++    .registers 2
++
++    .line 177
++    invoke-virtual {p0}, Landroid/content/Context;->getPackageManager()Landroid/content/pm/PackageManager;
++
++    move-result-object p0
++
++    const-string v0, "com.hkmc.software.connectivity.carplay_wireless"
++
++    .line 178
++    invoke-virtual {p0, v0}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_17
++
++    const-string v0, "com.hkmc.software.connectivity.androidauto_wireless"
++
++    .line 179
++    invoke-virtual {p0, v0}, Landroid/content/pm/PackageManager;->hasSystemFeature(Ljava/lang/String;)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_15
++
++    goto :goto_17
++
++    :cond_15
++    const/4 p0, 0x0
++
++    goto :goto_18
++
++    :cond_17
++    :goto_17
++    const/4 p0, 0x1
++
++    :goto_18
++    return p0
++.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaTbtMark.smali HKMC_DiPO.new/com/daudio/app/dipo/LeafiaTbtMark.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/LeafiaTbtMark.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaTbtMark.smali	2026-11-09 20:53:26.102512173 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/LeafiaTbtMark.smali	2026-11-16 19:00:29.339309328 +0000
 @@ -0,0 +1,68 @@
 +.class public final Lcom/daudio/app/dipo/LeafiaTbtMark;
 +.super Ljava/lang/Object;
@@ -6961,8 +8973,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/Leaf
 +    return-void
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/b.smali HKMC_DiPO.new/com/daudio/app/dipo/e/b.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/e/b.smali	2026-11-09 20:53:24.776356930 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/e/b.smali	2026-11-09 20:53:26.552111601 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/e/b.smali	2026-11-16 19:00:27.627876751 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/e/b.smali	2026-11-16 19:00:29.662665977 +0000
 @@ -1667,6 +1667,20 @@
  
      monitor-exit p0
@@ -6990,8 +9002,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/b.
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/g.smali HKMC_DiPO.new/com/daudio/app/dipo/e/g.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/e/g.smali	2026-11-09 20:53:24.794062347 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/e/g.smali	2026-11-09 20:53:26.736439826 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/e/g.smali	2026-11-16 19:00:27.653130273 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/e/g.smali	2026-11-16 19:00:29.778433043 +0000
 @@ -22,6 +22,23 @@
  .method public final connected(ILjava/lang/String;)V
      .registers 6
@@ -7036,8 +9048,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/g.
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/m.smali HKMC_DiPO.new/com/daudio/app/dipo/e/m.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/e/m.smali	2026-11-09 20:53:24.828359129 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/e/m.smali	2026-11-09 20:53:26.648436104 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/e/m.smali	2026-11-16 19:00:27.694833776 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/e/m.smali	2026-11-16 19:00:29.720888829 +0000
 @@ -388,8 +388,65 @@
  .end method
  
@@ -7136,8 +9148,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/m.
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.smali HKMC_DiPO.new/com/daudio/app/dipo/e/u.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/e/u.smali	2026-11-09 20:53:24.859328291 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/e/u.smali	2026-11-09 20:53:26.713623692 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/e/u.smali	2026-11-16 19:00:27.730370607 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/e/u.smali	2026-11-16 19:00:29.765513515 +0000
 @@ -438,6 +438,9 @@
  
      check-cast v0, Lcom/daudio/app/dipo/e/v;
@@ -7148,7 +9160,22 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      if-eqz v0, :cond_e
  
      invoke-static {v0}, Lcom/daudio/app/dipo/e/v;->a(Lcom/daudio/app/dipo/e/v;)I
-@@ -2216,7 +2219,10 @@
+@@ -535,6 +538,14 @@
+     :pswitch_173
+     move v1, v2
+ 
++    # Leafia G70 (update 26): no table entry (no exit angle from newer iPhones, keep left/right) -
++    # a placeholder when LeafiaCpTurn draws this maneuver itself, else 0 as stock
++    if-nez v1, :cond_174
++
++    invoke-static {}, Lcom/daudio/app/dipo/LeafiaCpGap;->unmapped()I
++
++    move-result v1
++
+     :cond_174
+     :goto_174
+     invoke-static {}, Lcom/daudio/app/dipo/i/e;->isCN()Z
+@@ -2216,7 +2227,10 @@
  
      const/4 v9, 0x0
  
@@ -7160,7 +9187,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      :try_end_7a5
      .catchall {:try_start_dd .. :try_end_7a5} :catchall_1c
  
-@@ -2643,6 +2649,9 @@
+@@ -2643,6 +2657,9 @@
  .method public static e(Ljava/lang/Object;)V
      .registers 12
  
@@ -7170,7 +9197,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      const/4 v1, 0x0
  
      if-nez p0, :cond_b
-@@ -3277,6 +3286,8 @@
+@@ -3277,6 +3294,8 @@
  .method private nT()V
      .registers 4
  
@@ -7179,7 +9206,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      :try_start_0
      iget-object v0, p0, Lcom/daudio/app/dipo/e/u;->Aj:Ljava/util/concurrent/Semaphore;
  
-@@ -4010,11 +4021,8 @@
+@@ -4010,11 +4029,8 @@
      goto :goto_3c
  
      :cond_92
@@ -7193,7 +9220,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
  
      move-object v1, p1
  
-@@ -4289,6 +4297,9 @@
+@@ -4289,6 +4305,9 @@
  .method public final disconnected()V
      .registers 1
  
@@ -7203,7 +9230,7 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      invoke-direct {p0}, Lcom/daudio/app/dipo/e/u;->nT()V
  
      return-void
-@@ -4348,6 +4359,13 @@
+@@ -4348,6 +4367,13 @@
  .method public final nS()V
      .registers 4
  
@@ -7217,14 +9244,14 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/e/u.
      sget-object v0, Lcom/daudio/app/dipo/e/u;->LOG_TAG:Ljava/lang/String;
  
      new-instance v1, Ljava/lang/StringBuilder;
-@@ -4397,3 +4415,4 @@
+@@ -4397,3 +4423,4 @@
      :cond_30
      return-void
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/f/b.smali HKMC_DiPO.new/com/daudio/app/dipo/f/b.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/f/b.smali	2026-11-09 20:53:24.921785749 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/f/b.smali	2026-11-09 20:53:28.168342347 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/f/b.smali	2026-11-16 19:00:27.808780965 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/f/b.smali	2026-11-16 19:00:30.796974594 +0000
 @@ -119,3 +115,47 @@
  
      goto :goto_b
@@ -7274,8 +9301,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/f/b.
 +.end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/i/e.smali HKMC_DiPO.new/com/daudio/app/dipo/i/e.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/i/e.smali	2026-11-09 20:53:26.077245506 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/i/e.smali	2026-11-09 20:53:26.887674130 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/i/e.smali	2026-11-16 19:00:29.309427167 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/i/e.smali	2026-11-16 19:00:29.877959284 +0000
 @@ -8100,11 +8100,10 @@
  
      const/16 v2, 0x3e7
@@ -7295,9 +9322,22 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/i/e.
      goto :goto_77
  .end method
 +
+diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/service/DipoService.smali HKMC_DiPO.new/com/daudio/app/dipo/service/DipoService.smali
+--- HKMC_DiPO.stock/com/daudio/app/dipo/service/DipoService.smali	2026-11-16 19:00:28.091895034 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/service/DipoService.smali	2026-11-16 19:00:30.195977474 +0000
+@@ -57483,6 +57483,9 @@
+ 
+     invoke-super {p0}, Lcom/hkmc/app/HKMCService;->onCreate()V
+ 
++    # Leafia G70 (update 27a): keep the projection hotspot on
++    invoke-static {p0}, Lcom/daudio/app/dipo/LeafiaHotspot;->init(Landroid/content/Context;)V
++
+     sget-object v0, Lcom/daudio/app/dipo/service/DipoService;->LOG_TAG:Ljava/lang/String;
+ 
+     const-string v1, "onCreate()"
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/service/LeafiaDipoStart.smali HKMC_DiPO.new/com/daudio/app/dipo/service/LeafiaDipoStart.smali
 --- HKMC_DiPO.stock/com/daudio/app/dipo/service/LeafiaDipoStart.smali	1970-01-01 00:00:00.000000000 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/service/LeafiaDipoStart.smali	2026-11-09 20:53:27.579181738 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/service/LeafiaDipoStart.smali	2026-11-16 19:00:30.329983238 +0000
 @@ -0,0 +1,151 @@
 +.class public final Lcom/daudio/app/dipo/service/LeafiaDipoStart;
 +.super Ljava/lang/Object;
@@ -7451,8 +9491,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/serv
 +    return-void
 +.end method
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/service/q.smali HKMC_DiPO.new/com/daudio/app/dipo/service/q.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/service/q.smali	2026-11-09 20:53:25.396383152 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/service/q.smali	2026-11-09 20:53:27.479538729 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/service/q.smali	2026-11-16 19:00:28.446293877 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/service/q.smali	2026-11-16 19:00:30.265977819 +0000
 @@ -1466,6 +1466,15 @@
  
      move-result-object v1
@@ -7475,8 +9515,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/serv
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali	2026-11-09 20:53:25.522673453 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali	2026-11-09 20:53:27.714751354 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali	2026-11-16 19:00:28.612139231 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService$1iAPSendMessage.smali	2026-11-16 19:00:30.446052844 +0000
 @@ -158,39 +158,16 @@
  .end method
  
@@ -7525,8 +9565,8 @@ diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/tele
  .end method
 +
 diff -ruN --strip-trailing-cr -I '^ *#' HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService.smali HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService.smali
---- HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService.smali	2026-11-09 20:53:25.671237988 +0000
-+++ HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService.smali	2026-11-09 20:53:27.911150347 +0000
+--- HKMC_DiPO.stock/com/daudio/app/dipo/telechips/CarPlayService.smali	2026-11-16 19:00:28.798880672 +0000
++++ HKMC_DiPO.new/com/daudio/app/dipo/telechips/CarPlayService.smali	2026-11-16 19:00:30.605251548 +0000
 @@ -7161,6 +7161,9 @@
  .method public onSessionFinalized(I)V
      .registers 6

@@ -36,9 +36,10 @@ def cls_path(root, c):
 
 
 for app, t in APPS:
-    base = W + '/ports/g70-251120/smali/' + app
+    # MERGE_BASE / MERGE_OURS as in merge.py (rebasing the newest trees from another port's stock)
+    base = W + '/ports/' + os.environ.get('MERGE_BASE', 'g70-251120') + '/smali/' + app
     theirs = W + '/ports/' + port + '/smali/' + app
-    ours = W + '/build/' + t
+    ours = W + '/build/' + (os.environ['MERGE_OURS'] + '-' + t if os.environ.get('MERGE_OURS') else t)
     refs = {}
     for r, _, fs in os.walk(ours):
         for f in fs:

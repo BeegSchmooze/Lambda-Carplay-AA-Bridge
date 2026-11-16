@@ -16,9 +16,10 @@ C=$R/pkg/scripts/common.sh
 # name:port dir:earlier builds of this package on that firmware, ','-separated (a package dir with
 # scripts/common.sh, or a firmware set's sums.sh): their SUM_NEW_* and SUM_PREV_* become SUM_PREV_*
 P=$W/prev
-SETS="251120:g70-251120-nocam:$W/release-u22/pkg,$P/v12/firmware/251120/sums.sh,$P/v13/firmware/251120/sums.sh,$P/u24/firmware/251120/sums.sh
-250818:g70-250818-nocam:$W/release-g70-250818/pkg,$P/v12/firmware/250818/sums.sh,$P/v13/firmware/250818/sums.sh,$P/u24/firmware/250818/sums.sh
-260507:g70-260507-nocam:$W/release-g70-260507/pkg,$P/v12/firmware/260507/sums.sh,$P/u23test1,$P/v13/firmware/260507/sums.sh,$P/u24/firmware/260507/sums.sh"
+SETS="251120:g70-251120-nocam:$W/release-u22/pkg,$P/v12/firmware/251120/sums.sh,$P/v13/firmware/251120/sums.sh,$P/u24/firmware/251120/sums.sh,$P/v14/firmware/251120/sums.sh,$P/u26/firmware/251120/sums.sh
+250818:g70-250818-nocam:$W/release-g70-250818/pkg,$P/v12/firmware/250818/sums.sh,$P/v13/firmware/250818/sums.sh,$P/u24/firmware/250818/sums.sh,$P/v14/firmware/250818/sums.sh,$P/u26/firmware/250818/sums.sh
+260507:g70-260507-nocam:$W/release-g70-260507/pkg,$P/v12/firmware/260507/sums.sh,$P/u23test1,$P/v13/firmware/260507/sums.sh,$P/u24/firmware/260507/sums.sh,$P/v14/firmware/260507/sums.sh,$P/u26/firmware/260507/sums.sh
+260903:g70-260903:$W/release-g70-260903/pkg"
 echo "$SETS" | while IFS=: read -r name port prev; do
     P=$W/release-$port/pkg
     D=$R/pkg/firmware/$name
@@ -144,7 +145,7 @@ pick_firmware || true
 '''
 open(p, 'w').write(s)
 EOF
-sed -i 's/^name=.*/name=G70 Wireless CarPlay \/ Android Auto bridge (251120, 250818, 260507)/' $R/pkg/NEMESIS.data
+sed -i 's/^name=.*/name=G70 Wireless CarPlay \/ Android Auto bridge (251120, 250818, 260507, 260903)/' $R/pkg/NEMESIS.data
 # store-format descriptor (1.1: version, description, os/models, conflicts); bump its version there
 python3 $W/ports/store_descriptor.py $R/pkg bridge > /dev/null
 for f in $R/pkg/scripts/*.sh $R/pkg/bin/*.sh; do mksh -n "$f"; done

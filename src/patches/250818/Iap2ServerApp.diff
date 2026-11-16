@@ -1,6 +1,493 @@
+diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/leafia/wifi/LeafiaApName.smali Iap2ServerApp.new/com/leafia/wifi/LeafiaApName.smali
+--- Iap2ServerApp.stock/com/leafia/wifi/LeafiaApName.smali	1970-01-01 00:00:00.000000000 +0000
++++ Iap2ServerApp.new/com/leafia/wifi/LeafiaApName.smali	2026-11-16 19:00:27.085816339 +0000
+@@ -0,0 +1,483 @@
++.class public final Lcom/leafia/wifi/LeafiaApName;
++.super Ljava/lang/Object;
++.source "LeafiaApName.java"
++
++
++# static fields
++.field static final HOSTAPD_CONF:Ljava/lang/String; = "/data/misc/wifi/hostapd.conf"
++
++.field static final PLAIN_PROP:Ljava/lang/String; = "persist.leafia.ap.plain"
++
++.field static final TAG:Ljava/lang/String; = "LeafiaCP"
++
++.field static sLast:Ljava/lang/String;
++
++
++# direct methods
++.method private constructor <init>()V
++    .registers 1
++
++    .line 32
++    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
++
++    return-void
++.end method
++
++.method static field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++    .registers 3
++
++    .line 61
++    :try_start_0
++    const-class v0, Landroid/net/wifi/WifiConfiguration;
++
++    invoke-virtual {v0, p1}, Ljava/lang/Class;->getField(Ljava/lang/String;)Ljava/lang/reflect/Field;
++
++    move-result-object p1
++
++    invoke-virtual {p1, p0}, Ljava/lang/reflect/Field;->get(Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object p0
++
++    check-cast p0, Ljava/lang/String;
++    :try_end_c
++    .catchall {:try_start_0 .. :try_end_c} :catchall_d
++
++    return-object p0
++
++    :catchall_d
++    const/4 p0, 0x0
++
++    return-object p0
++.end method
++
++.method static hint()Z
++    .registers 7
++
++    const/4 v0, 0x0
++
++    :try_start_1
++    const-string v1, "android.os.SystemProperties"
++
++    .line 51
++    invoke-static {v1}, Ljava/lang/Class;->forName(Ljava/lang/String;)Ljava/lang/Class;
++
++    move-result-object v1
++
++    const-string v2, "get"
++
++    const/4 v3, 0x2
++
++    new-array v4, v3, [Ljava/lang/Class;
++
++    const-class v5, Ljava/lang/String;
++
++    aput-object v5, v4, v0
++
++    const-class v5, Ljava/lang/String;
++
++    const/4 v6, 0x1
++
++    aput-object v5, v4, v6
++
++    .line 52
++    invoke-virtual {v1, v2, v4}, Ljava/lang/Class;->getMethod(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;
++
++    move-result-object v1
++
++    const/4 v2, 0x0
++
++    new-array v3, v3, [Ljava/lang/Object;
++
++    const-string v4, "persist.leafia.ap.plain"
++
++    aput-object v4, v3, v0
++
++    const-string v4, ""
++
++    aput-object v4, v3, v6
++
++    invoke-virtual {v1, v2, v3}, Ljava/lang/reflect/Method;->invoke(Ljava/lang/Object;[Ljava/lang/Object;)Ljava/lang/Object;
++
++    move-result-object v1
++
++    const-string v2, "t"
++
++    .line 53
++    invoke-virtual {v2, v1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++    :try_end_2e
++    .catchall {:try_start_1 .. :try_end_2e} :catchall_2e
++
++    :catchall_2e
++    return v0
++.end method
++
++.method static hostapdSsid()Ljava/lang/String;
++    .registers 5
++
++    const/4 v0, 0x0
++
++    .line 70
++    :try_start_1
++    new-instance v1, Ljava/io/BufferedReader;
++
++    new-instance v2, Ljava/io/FileReader;
++
++    const-string v3, "/data/misc/wifi/hostapd.conf"
++
++    invoke-direct {v2, v3}, Ljava/io/FileReader;-><init>(Ljava/lang/String;)V
++
++    invoke-direct {v1, v2}, Ljava/io/BufferedReader;-><init>(Ljava/io/Reader;)V
++    :try_end_d
++    .catchall {:try_start_1 .. :try_end_d} :catchall_2a
++
++    .line 71
++    :cond_d
++    :try_start_d
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->readLine()Ljava/lang/String;
++
++    move-result-object v2
++
++    if-eqz v2, :cond_24
++
++    const-string v3, "ssid="
++
++    .line 72
++    invoke-virtual {v2, v3}, Ljava/lang/String;->startsWith(Ljava/lang/String;)Z
++
++    move-result v3
++
++    if-eqz v3, :cond_d
++
++    const/4 v3, 0x5
++
++    invoke-virtual {v2, v3}, Ljava/lang/String;->substring(I)Ljava/lang/String;
++
++    move-result-object v0
++    :try_end_20
++    .catchall {:try_start_d .. :try_end_20} :catchall_28
++
++    .line 77
++    :try_start_20
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_23
++    .catchall {:try_start_20 .. :try_end_23} :catchall_23
++
++    :catchall_23
++    return-object v0
++
++    :cond_24
++    :goto_24
++    :try_start_24
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_27
++    .catchall {:try_start_24 .. :try_end_27} :catchall_65
++
++    goto :goto_65
++
++    :catchall_28
++    move-exception v2
++
++    goto :goto_2c
++
++    :catchall_2a
++    move-exception v2
++
++    move-object v1, v0
++
++    .line 74
++    :goto_2c
++    :try_start_2c
++    new-instance v3, Ljava/lang/StringBuilder;
++
++    invoke-direct {v3}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v4, "can\'t read /data/misc/wifi/hostapd.conf ("
++
++    invoke-virtual {v3, v4}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/Object;)Ljava/lang/StringBuilder;
++
++    const-string v2, "): "
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v2, "persist.leafia.ap.plain"
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v2, "="
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-static {}, Lcom/leafia/wifi/LeafiaApName;->hint()Z
++
++    move-result v2
++
++    if-eqz v2, :cond_51
++
++    const-string v2, "t"
++
++    goto :goto_53
++
++    :cond_51
++    const-string v2, "unset"
++
++    :goto_53
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    const-string v2, " decides"
++
++    invoke-virtual {v3, v2}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v3}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object v2
++
++    invoke-static {v2}, Lcom/leafia/wifi/LeafiaApName;->note(Ljava/lang/String;)V
++    :try_end_62
++    .catchall {:try_start_2c .. :try_end_62} :catchall_66
++
++    if-eqz v1, :cond_65
++
++    goto :goto_24
++
++    :catchall_65
++    :cond_65
++    :goto_65
++    return-object v0
++
++    :catchall_66
++    move-exception v0
++
++    if-eqz v1, :cond_6c
++
++    .line 77
++    :try_start_69
++    invoke-virtual {v1}, Ljava/io/BufferedReader;->close()V
++    :try_end_6c
++    .catchall {:try_start_69 .. :try_end_6c} :catchall_6c
++
++    .line 80
++    :catchall_6c
++    :cond_6c
++    goto :goto_6e
++
++    :goto_6d
++    throw v0
++
++    :goto_6e
++    goto :goto_6d
++.end method
++
++.method static note(Ljava/lang/String;)V
++    .registers 3
++
++    .line 85
++    sget-object v0, Lcom/leafia/wifi/LeafiaApName;->sLast:Ljava/lang/String;
++
++    invoke-virtual {p0, v0}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result v0
++
++    if-nez v0, :cond_20
++
++    .line 86
++    sput-object p0, Lcom/leafia/wifi/LeafiaApName;->sLast:Ljava/lang/String;
++
++    .line 87
++    new-instance v0, Ljava/lang/StringBuilder;
++
++    invoke-direct {v0}, Ljava/lang/StringBuilder;-><init>()V
++
++    const-string v1, "Leafia: "
++
++    invoke-virtual {v0, v1}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v0, p0}, Ljava/lang/StringBuilder;->append(Ljava/lang/String;)Ljava/lang/StringBuilder;
++
++    invoke-virtual {v0}, Ljava/lang/StringBuilder;->toString()Ljava/lang/String;
++
++    move-result-object p0
++
++    const-string v0, "LeafiaCP"
++
++    invoke-static {v0, p0}, Landroid/util/Log;->i(Ljava/lang/String;Ljava/lang/String;)I
++
++    :cond_20
++    return-void
++.end method
++
++.method static plain(Landroid/net/wifi/WifiConfiguration;)Z
++    .registers 4
++
++    if-nez p0, :cond_4
++
++    const/4 p0, 0x0
++
++    return p0
++
++    :cond_4
++    const-string v0, "ConnectivitySSID"
++
++    .line 93
++    invoke-static {p0, v0}, Lcom/leafia/wifi/LeafiaApName;->field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object v0
++
++    .line 94
++    invoke-static {}, Lcom/leafia/wifi/LeafiaApName;->hostapdSsid()Ljava/lang/String;
++
++    move-result-object v1
++
++    iget-object p0, p0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    invoke-static {}, Lcom/leafia/wifi/LeafiaApName;->hint()Z
++
++    move-result v2
++
++    invoke-static {v1, p0, v0, v2}, Lcom/leafia/wifi/LeafiaApName;->usePlain(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Z
++
++    move-result p0
++
++    if-eqz p0, :cond_1d
++
++    const-string v0, "the hotspot broadcasts its passenger-hotspot name: sending the phone that network (not the projection one)"
++
++    goto :goto_1f
++
++    :cond_1d
++    const-string v0, "sending the phone the projection network (the hotspot broadcasts it)"
++
++    .line 95
++    :goto_1f
++    invoke-static {v0}, Lcom/leafia/wifi/LeafiaApName;->note(Ljava/lang/String;)V
++
++    return p0
++.end method
++
++.method public static psk(Landroid/net/wifi/WifiConfiguration;)Ljava/lang/String;
++    .registers 3
++
++    const-string v0, "ConnectivityPSK"
++
++    .line 112
++    :try_start_2
++    invoke-static {p0}, Lcom/leafia/wifi/LeafiaApName;->plain(Landroid/net/wifi/WifiConfiguration;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_b
++
++    iget-object p0, p0, Landroid/net/wifi/WifiConfiguration;->preSharedKey:Ljava/lang/String;
++
++    goto :goto_f
++
++    :cond_b
++    invoke-static {p0, v0}, Lcom/leafia/wifi/LeafiaApName;->field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++    :try_end_f
++    .catchall {:try_start_2 .. :try_end_f} :catchall_10
++
++    :goto_f
++    return-object p0
++
++    .line 114
++    :catchall_10
++    invoke-static {p0, v0}, Lcom/leafia/wifi/LeafiaApName;->field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public static ssid(Landroid/net/wifi/WifiConfiguration;)Ljava/lang/String;
++    .registers 3
++
++    const-string v0, "ConnectivitySSID"
++
++    .line 103
++    :try_start_2
++    invoke-static {p0}, Lcom/leafia/wifi/LeafiaApName;->plain(Landroid/net/wifi/WifiConfiguration;)Z
++
++    move-result v1
++
++    if-eqz v1, :cond_b
++
++    iget-object p0, p0, Landroid/net/wifi/WifiConfiguration;->SSID:Ljava/lang/String;
++
++    goto :goto_f
++
++    :cond_b
++    invoke-static {p0, v0}, Lcom/leafia/wifi/LeafiaApName;->field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++    :try_end_f
++    .catchall {:try_start_2 .. :try_end_f} :catchall_10
++
++    :goto_f
++    return-object p0
++
++    .line 105
++    :catchall_10
++    invoke-static {p0, v0}, Lcom/leafia/wifi/LeafiaApName;->field(Landroid/net/wifi/WifiConfiguration;Ljava/lang/String;)Ljava/lang/String;
++
++    move-result-object p0
++
++    return-object p0
++.end method
++
++.method public static usePlain(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Z
++    .registers 4
++
++    const/4 v0, 0x0
++
++    .line 39
++    invoke-static {p0, p1, p2, v0}, Lcom/leafia/wifi/LeafiaApName;->usePlain(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Z
++
++    move-result p0
++
++    return p0
++.end method
++
++.method public static usePlain(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Z)Z
++    .registers 5
++
++    if-eqz p1, :cond_17
++
++    .line 44
++    invoke-virtual {p1}, Ljava/lang/String;->length()I
++
++    move-result v0
++
++    if-eqz v0, :cond_17
++
++    invoke-virtual {p1, p2}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p2
++
++    if-eqz p2, :cond_f
++
++    goto :goto_17
++
++    :cond_f
++    if-eqz p0, :cond_16
++
++    .line 45
++    invoke-virtual {p0, p1}, Ljava/lang/String;->equals(Ljava/lang/Object;)Z
++
++    move-result p0
++
++    return p0
++
++    :cond_16
++    return p3
++
++    :cond_17
++    :goto_17
++    const/4 p0, 0x0
++
++    return p0
++.end method
 diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali
---- Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-09 20:53:22.612265406 +0000
-+++ Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-09 20:53:24.156330708 +0000
+--- Iap2ServerApp.stock/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-16 19:00:25.578949917 +0000
++++ Iap2ServerApp.new/com/tcc/iap2server/Iap2InitInformationMsg.smali	2026-11-16 19:00:26.958010765 +0000
 @@ -4628,7 +4628,8 @@
  
      const/16 v1, 0x3e7
@@ -16,9 +503,34 @@ diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/I
      return-void
  .end method
 +
+diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/Iap2Service.smali Iap2ServerApp.new/com/tcc/iap2server/Iap2Service.smali
+--- Iap2ServerApp.stock/com/tcc/iap2server/Iap2Service.smali	2026-11-16 19:00:25.558163726 +0000
++++ Iap2ServerApp.new/com/tcc/iap2server/Iap2Service.smali	2026-11-16 19:00:26.987851296 +0000
+@@ -1010,11 +1010,19 @@
+ 
+     .line 2696
+     .local v7, "channel":I
+-    iget-object v1, v10, Landroid/net/wifi/WifiConfiguration;->ConnectivitySSID:Ljava/lang/String;
++    # Leafia G70 (update 27c): the network the hotspot really broadcasts
++    invoke-static {v10}, Lcom/leafia/wifi/LeafiaApName;->ssid(Landroid/net/wifi/WifiConfiguration;)Ljava/lang/String;
++
++    move-result-object v1
+ 
+     const/4 v2, 0x1
+ 
+-    iget-object v3, v10, Landroid/net/wifi/WifiConfiguration;->ConnectivityPSK:Ljava/lang/String;
++    # Leafia G70 (update 27c): the network the hotspot really broadcasts
++
++    invoke-static {v10}, Lcom/leafia/wifi/LeafiaApName;->psk(Landroid/net/wifi/WifiConfiguration;)Ljava/lang/String;
++
++
++    move-result-object v3
+ 
+     const/4 v4, 0x1
+ 
 diff -ruN --strip-trailing-cr -I '^ *#' Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali
---- Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-09 20:53:22.535946970 +0000
-+++ Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-09 20:53:24.234134074 +0000
+--- Iap2ServerApp.stock/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-16 19:00:25.490273856 +0000
++++ Iap2ServerApp.new/com/tcc/iap2server/Iap2ServiceReceiver.smali	2026-11-16 19:00:26.996564475 +0000
 @@ -33,11 +33,64 @@
  
  # virtual methods
