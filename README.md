@@ -96,9 +96,13 @@ Uninstall: NEMESIS Manager → Packages → `g70.carplay.bt` (the package keeps 
 A separate package for the Kia Stinger (2022, firmware `CKPE23.USA`): the phone's turn-by-turn on
 the head-up display and cluster with **wired** CarPlay and Android Auto (or a wireless dongle),
 the same as the G70 bridge's turn-by-turn part. It does not add wireless CarPlay / Android Auto.
-Release asset: `Stinger-TurnByTurn-v1.1.zip` (v1.1 adds the moving HUD approach bar). The package id is
+Release asset: `Stinger-TurnByTurn-v1.2.zip`. v1.2 moves the HUD approach bar through the trap frame the
+HUD actually reads (hidden until about 0.3 mi before the turn, then counting down; v1.1's bar did not move
+on the Stinger; the same fix is confirmed in the Stinger wireless package) and draws CarPlay turns that
+came without an angle. The package id is
 `stinger.tbt`; v1.0 and the test builds were `g70.tbt` (a leftover from the G70), so uninstall
-that first: v1.1 refuses while it is installed.
+that first: v1.1 and later refuse while it is installed. Not together with the Stinger wireless package,
+which already includes turn-by-turn.
 
 | Firmware | Status |
 |---|---|
@@ -111,7 +115,9 @@ G70's code: on 251120 identical to the G70's 250818 build, on 260507 to the G70'
 (one navigation class differs, which is not patched), so the patches are those in
 `src/patches/250818` and `src/patches/260507` (turn-by-turn classes only) plus update 24's DiPO
 hook (`src/hooks/hooks24_dipo.py`: switching nav apps on the iPhone clears the old app's turns)
-and update 25's approach bar (`src/hooks/hooks25_bar.py`, `src/java/LeafiaBar.java.in`).
+update 25's approach bar (`src/hooks/hooks25_bar.py`, `src/java/LeafiaBar.java.in`), update 26's angle-less
+CarPlay turns and trap-frame bar (`src/hooks/hooks26_dipo.py`, `src/hooks/hooks26_trapbar.py`,
+`src/java/com/mnsoft/navi/LeafiaTrapBar.java`).
 Install: unzip onto the root of a USB drive, plug it in with the head unit on and confirm; the head
 unit restarts. Uninstall: NEMESIS Manager → Packages → `stinger.tbt`. Not together with the G70 bridge
 (`g70.carplay.bt`), which the package refuses to install alongside.
@@ -165,7 +171,7 @@ files and must match the tested build's checksum.
    minutes, and Bluetooth may show "initializing" for a while; that is the apps
    being optimised once.
 
-The bare packages `g70.carplay.bt-1.5.zip` and `stinger.tbt-1.1.zip` on the releases are
+The bare packages `g70.carplay.bt-1.5.zip` and `stinger.tbt-1.2.zip` on the releases are
 the same packages for the NEMESIS Package Store and `nemesis install`. They use the
 store descriptor format (1.1), with compatibility set to the supported firmwares.
 

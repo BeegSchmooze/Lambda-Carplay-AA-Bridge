@@ -7,7 +7,8 @@ import os, re, sys
 
 tree = sys.argv[1]
 M = 'Lcom/mnsoft/navi/LeafiaTrapBar;->send(Lcom/hkmc/cluster/NavigationCluster;Lcom/hkmc/cluster/NavigationCluster$NaviTbtTrapInfo;)V'
-call = re.compile(r'^(\s*)invoke-virtual \{(v\d+), (v\d+)\}, Lcom/hkmc/cluster/NavigationCluster;->updateTBTTrapInfoNew\(Lcom/hkmc/cluster/NavigationCluster\$NaviTbtTrapInfo;\)V$', re.M)
+# some trees are CRLF: the lookahead allows a carriage return before the line end
+call = re.compile(r'^(\s*)invoke-virtual \{(v\d+), (v\d+)\}, Lcom/hkmc/cluster/NavigationCluster;->updateTBTTrapInfoNew\(Lcom/hkmc/cluster/NavigationCluster\$NaviTbtTrapInfo;\)V(?=\r?$)', re.M)
 assert os.path.exists(os.path.join(tree, 'com/mnsoft/navi/LeafiaTrapBar.smali')), 'LeafiaTrapBar.smali missing'
 want = {'com/mnsoft/navi/e/a.smali': 2, 'com/mnsoft/navi/message/a.smali': 1}
 done = 0

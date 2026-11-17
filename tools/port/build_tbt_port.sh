@@ -32,7 +32,7 @@ mk() {  # $1 app, $2 name, $3 merged tree, rest: files (relative to the tree roo
 }
 
 D=com/daudio/app/dipo
-mk HKMC_DiPO dipo dipo18 $D/i/e.smali $D/e/u.smali $D/LeafiaCpTurn.smali $D/LeafiaTbtMark.smali $D/LeafiaCpLane.smali $D/LeafiaBar.smali
+mk HKMC_DiPO dipo dipo18 $D/i/e.smali $D/e/u.smali $D/LeafiaCpTurn.smali $D/LeafiaTbtMark.smali $D/LeafiaCpLane.smali $D/LeafiaBar.smali $D/LeafiaCpGap.smali
 G=com/google/android/projection
 mk HKMC_GPM gpm gpm15 \
     $(cd build/$PORT-gpm15 && ls $G/leafia/*.smali | grep -v LeafiaCam) \
@@ -41,7 +41,9 @@ mk HKMC_GPM gpm gpm15 \
     $G/service/GalConnectionSession.smali "$G/service/GalConnectionSession\$6.smali"
 mk Iap2ServerApp iap2 iap2 com/tcc/iap2server/Iap2InitInformationMsg.smali
 N=com/mnsoft/navi
-mk HKMC_Navi_ExSL navi navi13 $N/e/a.smali $N/message/a.smali $N/LeafiaTbtMute.smali $N/LeafiaNavLog.smali
+# the trap-frame approach bar (LeafiaTrapBar), where the navi13 tree has it (Stinger tbt v1.2)
+mk HKMC_Navi_ExSL navi navi13 $N/e/a.smali $N/message/a.smali $N/LeafiaTbtMute.smali $N/LeafiaNavLog.smali \
+    $(cd build/$PORT-navi13 && ls $N/LeafiaTrapBar*.smali 2>/dev/null)
 
 # the Android Auto library
 python3 aa-tbt/build_lib_port.py $P/lib/libautoreceiver_infobank.so \

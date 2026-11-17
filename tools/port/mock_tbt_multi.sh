@@ -46,3 +46,12 @@ u "251120 test build" $W/prev/stinger-251120-tbt-test1-g70.tbt.zip $W/ports/stin
 u "260507 test build (on the car)" $W/prev/stinger-260507-tbt-test1-g70.tbt.zip $W/ports/stinger-260507 $F260
 u "v1.0 on 251120" $W/prev/stinger-tbt-v10-g70.tbt.zip $W/ports/stinger-251120 $F251
 u "v1.0 on 260507" $W/prev/stinger-tbt-v10-g70.tbt.zip $W/ports/stinger-260507 $F260
+
+v() {  # $1 label, $2 old package zip (stinger.tbt, same id: upgrade in place), $3 stock dir, $4 firmware
+    echo "== upgrade: $1"
+    env MOCK_PKG=stinger.tbt MOCK_SH=$SH sh $W/tools-g70/mock-upgrade.sh $2 $Z $4 ckpe23_us $3 2>&1 | grep -E "INSTALL|UNINSTALL|REFUSED|FAIL" | head -4
+}
+v "v1.1 on 251120" $W/prev/stinger-tbt-v11-stinger.tbt.zip $W/ports/stinger-251120 $F251
+v "v1.1 on 260507" $W/prev/stinger-tbt-v11-stinger.tbt.zip $W/ports/stinger-260507 $F260
+v "v1.2 test on 251120" $W/prev/stinger-tbt-v12t-stinger.tbt.zip $W/ports/stinger-251120 $F251
+v "v1.2 test on 260507" $W/prev/stinger-tbt-v12t-stinger.tbt.zip $W/ports/stinger-260507 $F260
