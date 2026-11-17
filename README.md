@@ -76,8 +76,9 @@ Work on the open items continues; see [docs/TECHNICAL.md](docs/TECHNICAL.md).
 A Stinger build of the G70 bridge for firmware `CKPE23.USA.0000.V015.012.260507`: wireless CarPlay
 and Android Auto over the car's own hotspot plus turn-by-turn on the HUD and cluster, standalone.
 Release asset: `Stinger-Wireless-v1.0.zip` (tag `stinger-wireless-v1.0`). Tested on a 2023 Stinger by its
-owner (iPhone and Android). It needs the head unit's Wi-Fi card: the 2023 unit has the G70's BCM4359,
-a 2022 unit we probed has no Wi-Fi hardware (use the turn-by-turn package below there).
+owner (iPhone and Android), and reported working on a 2022 Stinger too. It needs the head unit's Wi-Fi
+card (the G70's BCM4359), which varies per head unit rather than by model year: one 2022 unit we probed
+has no Wi-Fi hardware at all (on such a unit, use the turn-by-turn package below).
 
 Differences from the G70 build:
 
