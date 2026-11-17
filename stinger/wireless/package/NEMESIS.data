@@ -1,0 +1,22 @@
+[nemesis]
+version=1.1
+id=g70.carplay.bt
+name=G70 Wireless CarPlay / Android Auto bridge
+type=application,service
+os="*.260507"
+models=any
+preinstall=scripts/pre.sh
+postinstall=scripts/post.sh
+preuninstall=scripts/preun.sh
+
+[app.0]
+kind=sh
+path=bin/status.sh
+uid=root
+
+[service.0]
+name=appleie
+kind=sh
+path=svc/appleie.sh
+uid=root
+mode=restart

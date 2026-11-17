@@ -71,6 +71,25 @@ wireless Android Auto and CarPlay use; restart the head unit to get it back.
 
 Work on the open items continues; see [docs/TECHNICAL.md](docs/TECHNICAL.md).
 
+## Kia Stinger: wireless CarPlay and Android Auto
+
+A Stinger build of the G70 bridge for firmware `CKPE23.USA.0000.V015.012.260507`: wireless CarPlay
+and Android Auto over the car's own hotspot plus turn-by-turn on the HUD and cluster, standalone.
+Release asset: `Stinger-Wireless-v1.0.zip` (tag `stinger-wireless-v1.0`). Tested on a 2023 Stinger by its
+owner (iPhone and Android). It needs the head unit's Wi-Fi card: the 2023 unit has the G70's BCM4359,
+a 2022 unit we probed has no Wi-Fi hardware (use the turn-by-turn package below there).
+
+Differences from the G70 build:
+
+| Part | What it does on the Stinger |
+|---|---|
+| Apps | The G70 260507 builds (the Stinger's DiPO, GPM and Iap2ServerApp code is identical; its Navi differs in one class we don't patch, taken from the Stinger) |
+| Hotspot name | The Stinger's hotspot broadcasts its passenger-hotspot name and the apps can't read `hostapd.conf`, so the package sets `persist.leafia.ap.plain=t` and the bridge sends the phone the name on the air (restored on uninstall) |
+| Apple Wi-Fi tag | The Stinger's hostapd has no `apple_device_ie` option, so iPhones never saw a CarPlay network. A root NEMESIS service (`svc/appleie.sh`) hands the tag to the Broadcom driver after each hotspot start with the same private commands the G70's hostapd sends (`add_ie 0/1/2 00A040 0000020021`, via the 2 KB static tool `svc/leafiaie`). It never stops or restarts the hotspot |
+
+Uninstall: NEMESIS Manager → Packages → `g70.carplay.bt` (the package keeps the G70 id). Uninstall
+`wireless.projection` and the Stinger turn-by-turn package first.
+
 ## Kia Stinger: turn-by-turn on the HUD and cluster
 
 A separate package for the Kia Stinger (2022, firmware `CKPE23.USA`): the phone's turn-by-turn on
@@ -190,6 +209,8 @@ smali diffs against each firmware's stock apps.
 package/          the NEMESIS package source (zip its contents to make g70.carplay.bt.zip);
                   package/firmware/<firmware>/ holds each firmware's checksums and deltas
 stinger/package/  the Kia Stinger turn-by-turn package source (stinger.tbt, formerly g70.tbt; firmware/<firmware>/ sets)
+stinger/wireless/ the Kia Stinger wireless package (package/, as released) and its Apple-tag service
+                  (svc/: appleie.sh, the leafiaie driver tool, off-car tests); built by tools/port/build_stinger_260507.sh
 src/patches/      smali diffs per firmware: stock app -> this build (new classes included)
 src/java/         Java source of the bridge classes compiled into the apps
 src/hooks/        the scripts that insert the calls into the apps' smali
